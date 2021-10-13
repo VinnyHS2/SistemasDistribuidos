@@ -12,16 +12,16 @@
             - EXIT: Finaliza a conexão com o servidor
 
 '''
-import socket 
+import socket
+import hashlib
 
 ip = "127.0.0.1"
 port = 5973
 
 addr = (ip, port) 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    pass
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.connect(addr)
+socketClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    
+socketClient.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+socketClient.connect(addr)
 
 '''
 ### main() ###
@@ -47,38 +47,40 @@ def main():
 
         if((entrada.split())[0] == "CONNECT"):
             #TODO codificar a senha para sha-512
-            entrada[2] = entrada.encode('sha-512')
-
+            # print("entrada completa:", entrada)
+            # print("entrada posição 2:", entrada.split()[2])
+            senhaHash = hashlib.sha512(entrada[2].encode('utf-8')).hexdigest()
+            entrada = (entrada.split())[0] + ' ' + (entrada.split())[1] + ' ' + senhaHash
+            print("entrada completa:", entrada)
+            
         # Envia mensagem
-        s.send(entrada.encode('utf-8'))
+        socketClient.send(entrada.encode('utf-8'))
         
         # Lista os comandos
-        
-        #TODO: fazer switch case
-
         if(entrada == "HELP"):
-            comandos = s.recv(1024).decode('utf-8')
+            comandos = socketClient.recv(1024).decode('utf-8')
             for comandos in comandos.split(';'):
                 print(comandos)
 
         # Envia a mensagem e fecha a conexão
         if(entrada == "EXIT"):
-            s.close()
+            socketClient.close()
             break
         
         if(entrada == "PWD"):
-            print(s.recv(1024).decode('utf-8'))
+            print(socketClient.recv(1024).decode('utf-8'))
 
         if((entrada.split())[0] == "CONNECT"):
-            print(s.recv(1024).decode('utf-8'))
+            print(socketClient.recv(1024).decode('utf-8'))
         
         if(entrada == "GETFILES"):
             #TODO: listar os arquivos da forma correta
-            print(s.recv(1024).decode('utf-8'))
+            print(socketClient.recv(1024).decode('utf-8'))
         
         if(entrada == "GETDIRS"):
-            print(s.recv(1024).decode('utf-8'))
+            print(socketClient.recv(1024).decode('utf-8'))
 
         if((entrada.split())[0] == "CHDIR"):
-            print(s.recv(1024).decode('utf-8'))
+            print('oi')
+            # print(socketClient.recv(1024).decode('utf-8'))
 main()
