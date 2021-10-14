@@ -119,41 +119,6 @@ def programa(ip, port, connection):
             response = 'diretório alterado com sucesso'
             connection.send(response.encode('utf-8'))
 
-        # Comandos Alisson
-
-        # Lista os arquivos do servidor
-        if(msg_str == "FILES"):
-            # todos os arquivos do diretorio
-            arquivos = os.listdir(path='./server_files')
-            connection.sendall(str(len(arquivos)).encode('utf-8'))
-
-            # para cada um dos arquivos (desconsiderando as pastas), envia o nome deles
-            for dir in arquivos:
-                print(dir)
-                connection.sendall(dir.encode('utf-8'))
-
-        # Baixar um arquivo do servidor
-        if((msg_str.split())[0] == 'DOWN'):
-            # todos os arquivos do diretorio
-            arquivos = os.listdir(path='./server_files')
-            nomeArquivo = msg_str.split()[1]
-
-            # caso tenha o arquivo no diretorio
-            if nomeArquivo in arquivos:
-                # envia os bytes do arquivo
-                connection.send(
-                    str(os.stat('./server_files/' + nomeArquivo).st_size).encode('utf-8'))
-
-                # abre o arquivo, e envia byte a byte
-                with open('./server_files/' + nomeArquivo, 'r+b') as file:
-                    byte = file.read(1)
-
-                    while byte != b'':
-                        connection.send(byte)
-                        byte = file.read(1)
-            # caso não tenha o arquivo
-            else:
-                connection.send(str(0).encode('utf-8'))
 
 
 '''

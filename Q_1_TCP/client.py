@@ -88,19 +88,6 @@ def main():
             else:
                 print("O diretorio atual não contém nenhum arquivo")
 
-        if(entrada == "FILES"):
-            files = socketClient.recv(1024).decode('utf-8')
-            print('Numero de arquivos encontrados: ', files)
-            numFiles = int(files)
-            listaArquivos = []
-            posicaoLista = 0
-
-            while posicaoLista < numFiles:
-                arquivoNomes = socketClient.recv(1024).decode('utf-8')
-                listaArquivos.append(arquivoNomes)
-                print(listaArquivos[posicaoLista])
-                posicaoLista += 1
-
         if(entrada == "GETDIRS"):
             # print('Tentando listar diretórios')
             posicao = 0 
