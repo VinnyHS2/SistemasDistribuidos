@@ -23,7 +23,7 @@ host = ""
 port = 5973
 addr = (host, port)
 
-serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    
+serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 serverSocket.bind(addr)
 
@@ -60,27 +60,64 @@ def programa(ip, port, connection):
             print(serverSocket.recv(1024).decode('utf-8'))
 
         # Comandos Nosso
-
+        # Mostrar caminho atual OK
         if(msg_str == "PWD"):
-            currentDirectory = os.getcwd()
-            print(currentDirectory)
-            connection.send('server' + currentDirectory.encode('utf-8'))
+            currentPath: os.PathLike = os.getcwd()
+            print(currentPath)
+            connection.send((currentPath).encode('utf-8'))
 
-
+        # Iniciar conexão
         if((msg_str.split())[0] == 'CONNECT'):
             connection.send('server' + msg_str.encode('utf-8'))
 
-
+        # Todos os arquivos
         if(msg_str == "GETFILES"):
-            print(serverSocket.recv(1024).decode('utf-8'))
-        
-        if(msg_str == "GETDIRS"):
-            print(serverSocket.recv(1024).decode('utf-8'))
+            quantidade = 0
+            diretorios: list[str] = []
+            diretorio = str(os.getcwd())
+            arquivos = os.listdir(diretorio)
+            print('Creio que esses sejam os arquivos', arquivos)
+            for arquivo in arquivos:
+                if (os.path.isfile(str(diretorio + '\\' + arquivo))):
+                    quantidade = quantidade + 1
+                    diretorios.append(str(arquivo))
+            if (quantidade > 0):
+                connection.send(str(quantidade).encode('utf-8'))
+                for dir in diretorios:
+                    print(dir)
+                    connection.sendall(dir.encode('utf-8'))
+            else:
+                connection.send(
+                    ('Nenhum diretorio encontrado').encode('utf-8'))
 
+        # Todos os diretórios
+        if(msg_str == "GETDIRS"):
+            quantidade = 0
+            diretorios: list[str] = []
+            diretorio = str(os.getcwd())
+            arquivos = os.listdir(diretorio)
+            print('Creio que esses sejam os arquivos', arquivos)
+            for arquivo in arquivos:
+                if(os.path.isdir(str(diretorio + '\\' + arquivo))):
+                    quantidade = quantidade + 1
+                    diretorios.append(str(arquivo))
+            if(quantidade > 0):
+                connection.send(str(quantidade).encode('utf-8'))
+                for dir in diretorios:
+                    print(dir)
+                    connection.sendall(dir.encode('utf-8'))
+            else:
+                connection.send(('Nenhum diretorio encontrado').encode('utf-8'))
+
+
+
+
+
+        # Alterar o diretório parcialmente #TODO: Falar quando o diretório não existe ou criar depende
         if((msg_str.split())[0] == "CHDIR"):
             os.chdir((msg_str.split())[1])
             response = 'diretório alterado com sucesso'
-            connection.send('server' + msg_str.encode('utf-8'))
+            connection.send(response.encode('utf-8'))
 
         # Comandos Alisson
 

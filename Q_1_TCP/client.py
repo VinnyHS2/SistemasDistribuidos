@@ -18,8 +18,8 @@ import hashlib
 ip = "127.0.0.1"
 port = 5973
 
-addr = (ip, port) 
-socketClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    
+addr = (ip, port)
+socketClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socketClient.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 socketClient.connect(addr)
 
@@ -52,10 +52,10 @@ def main():
             senhaHash = hashlib.sha512(entrada[2].encode('utf-8')).hexdigest()
             entrada = (entrada.split())[0] + ' ' + (entrada.split())[1] + ' ' + senhaHash
             print("entrada completa:", entrada)
-            
+
         # Envia mensagem
         socketClient.send(entrada.encode('utf-8'))
-        
+
         # Lista os comandos
         if(entrada == "HELP"):
             comandos = socketClient.recv(1024).decode('utf-8')
@@ -66,21 +66,59 @@ def main():
         if(entrada == "EXIT"):
             socketClient.close()
             break
-        
+
         if(entrada == "PWD"):
             print(socketClient.recv(1024).decode('utf-8'))
 
         if((entrada.split())[0] == "CONNECT"):
             print(socketClient.recv(1024).decode('utf-8'))
-        
+
         if(entrada == "GETFILES"):
-            #TODO: listar os arquivos da forma correta
-            print(socketClient.recv(1024).decode('utf-8'))
-        
+            posicao = 0 
+            listaArquivos = []
+            quantidade = int(socketClient.recv(1024).decode('utf-8'))
+            print('Quantidade de arquivos: ', quantidade)
+            if quantidade > 0:
+                print("Arquivos: ")
+                while posicao < quantidade:
+                    arquivoNomes = socketClient.recv(1024).decode('utf-8')
+                    listaArquivos.append(arquivoNomes)
+                    print(listaArquivos[posicao])
+                    posicao += 1
+            else:
+                print("O diretorio atual não contém nenhum arquivo")
+
+        if(entrada == "FILES"):
+            files = socketClient.recv(1024).decode('utf-8')
+            print('Numero de arquivos encontrados: ', files)
+            numFiles = int(files)
+            listaArquivos = []
+            posicaoLista = 0
+
+            while posicaoLista < numFiles:
+                arquivoNomes = socketClient.recv(1024).decode('utf-8')
+                listaArquivos.append(arquivoNomes)
+                print(listaArquivos[posicaoLista])
+                posicaoLista += 1
+
         if(entrada == "GETDIRS"):
-            print(socketClient.recv(1024).decode('utf-8'))
+            # print('Tentando listar diretórios')
+            posicao = 0 
+            listaArquivos = []
+            quantidade = int(socketClient.recv(1024).decode('utf-8'))
+            print('Quantidade de diretórios: ', quantidade)
+            if quantidade > 0:
+                print("Diretórios: ")
+                while posicao < quantidade:
+                    arquivoNomes = socketClient.recv(1024).decode('utf-8')
+                    listaArquivos.append(arquivoNomes)
+                    print(listaArquivos[posicao])
+                    posicao += 1
+            else:
+                print("O diretorio atual não nenhuma pasta")
+            
 
         if((entrada.split())[0] == "CHDIR"):
-            print('oi')
-            # print(socketClient.recv(1024).decode('utf-8'))
+            print('Tentando alterar diretório')
+            print(socketClient.recv(1024).decode('utf-8'))
 main()
