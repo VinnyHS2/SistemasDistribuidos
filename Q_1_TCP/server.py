@@ -16,9 +16,7 @@
 from genericpath import isdir
 import threading
 import socket
-from datetime import date, datetime
 import os
-import hashlib
 
 host = ""
 port = 5973
@@ -33,7 +31,7 @@ serverSocket.bind(addr)
 commands = "######## BitServer ########\n;CONNECT user password: Confere os dados informados e realiza a conexão do usuário ao servidor; PWD: Devolve ao cliente o caminho atual'; CHDIR *path*: Muda o diretório para o *path* especificado; GETFILES: Devolve ao cliente todos os arquivos do diretório atual; GETDIRS: Devolve ao cliente todos os diretórios do diretório atual; EXIT: Finaliza a conexão com o cliente;"
 
 '''
-### programa(ip, port, con) ###
+### threadConnection(ip, port, con) ###
 # Metodo que executa as requisições do cliente
 # Params: 
     - Ip: ip do cliente
@@ -42,7 +40,7 @@ commands = "######## BitServer ########\n;CONNECT user password: Confere os dado
 '''
 
 
-def programa(ip, port, connection):
+def threadConnection(ip, port, connection):
 
     authenticated = False
 
@@ -65,28 +63,24 @@ def programa(ip, port, connection):
                 connection.send(('ERROR').encode('utf-8'))
 
         elif (msg_str == 'EXIT'):
-            print('Cliente com o ip: ', ip, ', na porta: ',port, ', foi desconectado!')
             connection.send(('Conexão encerrada').encode('utf-8'))
             connection.close()
             break
 
         else:
-            print('aoku')
             connection.send(('ERROR').encode('utf-8'))
-
 
     while authenticated == True:
 
         # Recebe a mensagem
         msgNova = connection.recv(1024)
-        print(msgNova)
         # Decodifica a mensagem
         msg_str = msgNova.decode('utf-8')
 
         # Notifica servidor sobre a saída do cliente
         if(msg_str == 'EXIT'):
-            print('Cliente com o ip: ', ip, ', na porta: ',
-                  port, ', foi desconectado!')
+            print('Cliente: ', ip, ', que estava utilizando a porta: ',
+                  port, ', desconectou!')
             connection.send(('Conexão encerrada').encode('utf-8'))
             connection.close()
             break
@@ -99,7 +93,6 @@ def programa(ip, port, connection):
         # Mostrar caminho atual OK
         elif(msg_str == "PWD"):
             currentPath: os.PathLike = os.getcwd()
-            print(currentPath)
             connection.send((currentPath).encode('utf-8'))
 
         # Todos os arquivos
@@ -108,7 +101,6 @@ def programa(ip, port, connection):
             dirs: list[str] = []
             directory = str(os.getcwd())
             files = os.listdir(directory)
-            print('Creio que esses sejam os arquivos', files)
             for nameFile in files:
                 if (os.path.isfile(str(directory + '\\' + nameFile))):
                     numberFiles = numberFiles + 1
@@ -126,7 +118,6 @@ def programa(ip, port, connection):
             diretorios: list[str] = []
             diretorio = str(os.getcwd())
             arquivos = os.listdir(diretorio)
-            print('Creio que esses sejam os arquivos', arquivos)
             for arquivo in arquivos:
                 if(os.path.isdir(str(diretorio + '\\' + arquivo))):
                     quantidade = quantidade + 1
@@ -135,11 +126,8 @@ def programa(ip, port, connection):
                 connection.send(str(quantidade).encode('utf-8'))
                 connection.send(str(diretorios).encode('utf-8'))
             else:
-                connection.send(('Nenhum diretorio encontrado').encode('utf-8'))
-
-
-
-
+                connection.send(
+                    ('Nenhum diretorio encontrado').encode('utf-8'))
 
         # Alterar o diretório parcialmente #TODO: Falar quando o diretório não existe ou criar depende
         elif((msg_str.split())[0] == "CHDIR"):
@@ -150,7 +138,6 @@ def programa(ip, port, connection):
                 connection.send(('ERROR').encode('utf-8'))
 
         else:
-            print('aoksu')
             connection.send(('ERROR').encode('utf-8'))
 
 
@@ -161,20 +148,21 @@ def programa(ip, port, connection):
     - none
 '''
 
+
 def main():
     vetorThreads = []
 
     while 1:
         # Limite de 20 conexões
         serverSocket.listen(20)
-        # Servidor escuta as conexões
+        # Servidor espera alguem se conectar na porta 5973 está é uma função bloqueante
         (connection, (ip, port)) = serverSocket.accept()
-        print('Sessão com o cliente: ', ip,
-              ', na porta: ', port, ', foi estabelecida!')
+        print('Cliente: ', ip, ', se conectou na porta: ',
+              port, '!')
 
         # Cria e inicia uma thread para cada cliente que chega
         thread = threading.Thread(
-            target=programa, args=(ip, port, connection, ))
+            target=threadConnection, args=(ip, port, connection, ))
         thread.start()
 
         # Adiciona ao vetor de threads
