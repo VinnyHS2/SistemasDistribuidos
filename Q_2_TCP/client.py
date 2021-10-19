@@ -27,13 +27,6 @@ socketClient.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,
 socketClient.connect(
     addr
 )  #Realiza a conexão do socket utilizando o ip e a porta definidos anteriormente
-'''
-### main() ###
-# Metodo que pega a operação do cliente, e aguarda
-# a resposta do servidor.
-# Params: 
-    - none
-'''
     
 def main():
     while True:
@@ -57,12 +50,10 @@ def main():
                         socketClient.send(header + bytearray(fileName.encode())) # Envia o cabeçalho de requisição
                         fileSize = (os.stat('./arquivosCliente/' + fileName).st_size).to_bytes(4, "big") #Pega o tamanho do arquivo e coverte em bytes e ordena em big endian
                         socketClient.send(fileSize) #Envia o tamanho do arquivo
-                        file = open('./arquivosCliente/' + fileName, 'rb') #Abre o arquivo
-                        byte = file.read(1)
-                        while byte != b'': #Envia o arquivo byte a byte
-                            socketClient.send(byte)
-                            byte = file.read(1)
-                        print(socketClient.recv(1024))
+                        fileOpen = open('./arquivosCliente/' + fileName, 'rb') #Abre o arquivo no modo leitura binaria
+                        file = fileOpen.read() #Transforma o arquivo em bytes
+                        socketClient.send(file)
+                        print(socketClient.recv(3))
                 else:
                     print('Arquivo não encontrado')
 
@@ -72,16 +63,37 @@ def main():
                 header[2] = len(fileName)
                 socketClient.send(header + bytearray(fileName.encode()))
                 
-                print(socketClient.recv(1024))
+                print(socketClient.recv(3))
 
             elif (operation == "GETFILESLIST"):
-                print('fudeo')
                 header[1] = 3
                 header[2] = 0
                 socketClient.send(header)
                 
-                print(socketClient.recv(1024))
-                print(socketClient.recv(1024))
+                if(socketClient.recv(3)[2] == 1):
+                    numberFiles = int.from_bytes(socketClient.recv(2), 'big')
+                    for _ in range(numberFiles):
+                        filenameSize = int.from_bytes(socketClient.recv(1), 'big')
+                        print(socketClient.recv(filenameSize).decode())
+                else:
+                    print("ERROR")
+                    
+            elif (operation == "GETFILE"):
+                header[1] = 4
+                header[2] = len(fileName)
+                socketClient.send(header + bytearray(fileName.encode()))
+                if(socketClient.recv(3)[2] == 1):
+                    tamanhoArquivo = int.from_bytes(socketClient.recv(4), byteorder='big')
+                    print(int(tamanhoArquivo))
+                    # Recebe o arquivo
+                    arquivo = b''
+                    arquivo = socketClient.recv(tamanhoArquivo)
+
+                    # Salva o arquivo na pasta do client
+                    with open('./arquivosCliente/' + fileName, 'w+b') as file:
+                        file.write(arquivo)
+                else:
+                    print('deu ruim')
 
 
 

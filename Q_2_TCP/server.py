@@ -29,18 +29,6 @@ FORMAT = '%(asctime)-1s %(clientip)s %(user)s %(message)s'
 logging.basicConfig(format=FORMAT,level=20)
 logger = logging.getLogger('tcpserver')
 
-commands = "######## BitServer ########\n;CONNECT user password: Confere os dados informados e realiza a conexão do usuário ao servidor; PWD: Devolve ao cliente o caminho atual'; CHDIR *path*: Muda o diretório para o *path* especificado; GETFILES: Devolve ao cliente todos os arquivos do diretório atual; GETDIRS: Devolve ao cliente todos os diretórios do diretório atual; EXIT: Finaliza a conexão com o cliente;"
-
-'''
-### threadConnection(ip, port, con) ###
-# Metodo que executa as requisições do cliente
-# Params: 
-    - Ip: ip do cliente
-    - Port: porta que o cliente se conectou
-    - Conexao: a conexao realizada
-'''
-
-
 def createFile(name):
     try:
         newArchive = open(name, "w")
@@ -53,9 +41,9 @@ def threadConnection(ip, port, connection):
     d = {'clientip': ip, 'user': port}
     while True:
         header = bytearray(3)
+        header[0] = 2
         # Recebe a mensagem
         msg = bytearray(connection.recv(1024))
-        print(msg)
         messageType = int(msg[0])
         commandId = int(msg[1])
         fileNameSize = int(msg[2])
@@ -68,16 +56,16 @@ def threadConnection(ip, port, connection):
             tamanhoArquivo = int.from_bytes(connection.recv(4), byteorder='big')
             # Recebe o arquivo
             arquivo = b''
-            for _ in range(tamanhoArquivo):
-                bytes = connection.recv(1)
-                arquivo += bytes
+            logger.info('Protocol info: %s', 'Download started', extra=d)
+            arquivo = connection.recv(tamanhoArquivo)
+            logger.info('Protocol info: %s', 'Download finished', extra=d)
             
             # Salva o arquivo na pasta do servidor
             with open('./arquivosServidor/' + fileName, 'w+b') as file:
                 file.write(arquivo)
 
             # Busca todos os arquivos do diretório do servidor
-            arquivos = os.listdir(path='./arquivosServidor')
+            arquivos = os.listdir(path='./arquivosServidor/')
             # Verifica se o arquivo foi adicionado
             if fileName in arquivos:
                 header[2] = 1
@@ -85,7 +73,6 @@ def threadConnection(ip, port, connection):
             else:
                 header[2] = 2
                 logger.info('Protocol info: %s', 'ADDFILE ERROR', extra=d)
-            header[0] = 2
             header[1] = 1
             connection.send(header)
             logger.info('Protocol info: %s', 'ADDFILE response sent', extra=d)
@@ -110,7 +97,6 @@ def threadConnection(ip, port, connection):
 
             else:
                 header[2] = 2
-            header[0] = 2
             header[1] = 2
             # Envia o cabeçalho
             connection.send(header)
@@ -121,49 +107,66 @@ def threadConnection(ip, port, connection):
             # Log
             logger.info('Protocol info: %s', 'Received GETFILESLIST request', extra=d)
             numberFiles = 0
-            dirs: list[str] = []
+            files: list[str] = []
             # Busca tudo o que está dentro do diretório
-            files = os.listdir('./arquivosServidor/')
+            dir = os.listdir('./arquivosServidor/')
             # Verifica se o que foi encontrado no diretório é arquivo ou diretorio
-            header[0] = 2
             header[1] = 3
-            for nameFile in files:
+            fileNameSizeResponse = 0
+            for nameFile in dir:
                 if (os.path.isfile(str('./arquivosServidor/' + nameFile))):
                     numberFiles = numberFiles + 1
                     # Cria um vetor com os nomes dos arquivos encontrados
-                    dirs.append(str(nameFile))
+                    files.append(str(nameFile))
             # Verifica se foi encontrado algum arquivo
             if (numberFiles > 0):
-                header[2] = 2
-                numberFiles = 255
+                header[2] = 1
                 connection.send(header)
-                # Envia o numero de arquivos
                 connection.send(numberFiles.to_bytes(2, "big"))
+                for nameFile in files:
+                    fileNameSizeResponse = len(nameFile)
+                    connection.send(fileNameSizeResponse.to_bytes(1,"big"))
+                    connection.send(nameFile.encode())
+                    # print('teste')
                 # Envia o nome dos arquivos
                 # connection.send(str(dirs).encode('utf-8'))
             else:
-                connection.send(('Nenhum diretorio encontrado').encode('utf-8'))
+                logger.info('Protocol info: %s', 'GETFILESLIST error', extra=d)
+                header[2] = 2
+                connection.send(header) # Envia o cabeçalho de requisição
+                logger.info('Protocol info: %s', 'GETFILESLIST header sent', extra=d)
         
         # GetFile faz download de um arquivo
         elif(commandId == 4):
             # Log
             logger.info('Protocol info: %s', 'Received GETFILE request', extra=d)
-            connection.send(commands.encode('utf-8'))
-
-'''
-### main() ###
-# Metodo que realiza a conexão do cliente
-# Params: 
-    - none
-'''
+            header[1] = 4
+            arquivos = os.listdir('./arquivosServidor')
+            if(arquivos.__contains__(fileName)):
+                if(len(fileName) <= 255):
+                    header[2] = 1
+                    connection.send(header) # Envia o cabeçalho de requisição
+                    logger.info('Protocol info: %s', 'GETFILE header sent', extra=d)
+                    fileSize = (os.stat('./arquivosServidor/' + fileName).st_size).to_bytes(4, "big") #Pega o tamanho do arquivo e coverte em bytes e ordena em big endian
+                    connection.send(fileSize) #Envia o tamanho do arquivo
+                    fileOpen = open('./arquivosServidor/' + fileName, 'rb') #Abre o arquivo no modo leitura binaria
+                    file = fileOpen.read() #Transforma o arquivo em bytes
+                    logger.info('Protocol info: %s', 'Upload started', extra=d)
+                    connection.send(file)
+                    logger.info('Protocol info: %s', 'Upload finished', extra=d)
+            else:
+                logger.info('Protocol info: %s', 'GETFILE error', extra=d)
+                header[2] = 2
+                connection.send(header) # Envia o cabeçalho de requisição
+                logger.info('Protocol info: %s', 'GETFILE header sent', extra=d)
 
 
 def main():
     vetorThreads = []
 
     while 1:
-        # Limite de 20 conexões
-        serverSocket.listen(20)
+        # Limite de 5 conexões
+        serverSocket.listen(5)
         # Servidor escuta as conexões
         (connection, (ip, port)) = serverSocket.accept()
         # Define usuário e a porta para o log
@@ -171,7 +174,7 @@ def main():
         # Log
         logger.info('Protocol info: %s', 'connection established', extra=d)
 
-        # Cria e inicia uma thread para cada novo client
+        # Cria e inicia uma thread para cada client
         thread = threading.Thread(
             target=threadConnection, args=(ip, port, connection, ))
         thread.start()
