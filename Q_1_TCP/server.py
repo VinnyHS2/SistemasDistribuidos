@@ -58,7 +58,6 @@ def threadConnection(ip, port, connection):
             if (userClient == userMain):
                 # Verifica se a senha está correta
                 if (passwordClient == passwordMain):
-                    # print(msg_str.split()[2])
                     # Log
                     logger.info('Protocol info: %s', 'CONNECT SUCCESS', extra=d)
                     # Envia a mensagem de SUCCESS para o cliente
