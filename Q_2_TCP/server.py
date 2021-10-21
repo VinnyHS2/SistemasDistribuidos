@@ -209,7 +209,7 @@ def threadConnection(ip, port, connection):
 def main():
     vetorThreads = []
 
-    while 1:
+    while True:
         # Limite de 5 conexões
         serverSocket.listen(5)
         # Servidor escuta as conexões

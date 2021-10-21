@@ -33,10 +33,10 @@ def main():
     while True:
         operation = input("> ")
         operationFormated = ''
-        # Formata a operação
-        operationFormated = operation.split()[0].upper() + operation[len(operation.split()[0]):]
         # Verifica se a operação é vazia
-        if (len(operationFormated) > 0):
+        if (len(operation) > 0):
+            # Formata a operação
+            operationFormated = operation.split()[0].upper() + operation[len(operation.split()[0]):]
             # Verifica se o comando enviado tem mais de 2 argumentos e se é o connect
             if (len(operationFormated.split()) > 2 and (operationFormated.split())[0] == "CONNECT"):
                 # Criptografa a senha
