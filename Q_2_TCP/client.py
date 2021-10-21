@@ -64,7 +64,12 @@ def main():
                         # Envia o arquivo
                         socketClient.send(file)
                         # Recebe a confirmação do servidor
-                        print(socketClient.recv(3))
+                        response = int(socketClient.recv(3)[2])
+                        if(response == 1):
+                            print("SUCCESS")
+                        else:
+                            print("ERROR")
+
                 else:
                     print('Arquivo não encontrado')
 
@@ -76,7 +81,12 @@ def main():
                 # Envia o cabeçalho e nome do arquivo
                 socketClient.send(header + bytearray(fileName.encode()))
                 
-                print(socketClient.recv(3))
+                # Recebe a confirmação do servidor
+                response = int(socketClient.recv(3)[2])
+                if(response == 1):
+                    print("SUCCESS")
+                else:
+                    print("ERROR")
 
             elif (operation == "GETFILESLIST"):
                 # Define o CommandId
@@ -109,7 +119,6 @@ def main():
                 if(socketClient.recv(3)[2] == 1):
                     # Recebe o tamanho do arquivo em bigendian
                     tamanhoArquivo = int.from_bytes(socketClient.recv(4), byteorder='big')
-                    print(int(tamanhoArquivo))
                     # Recebe o arquivo
                     arquivo = b''
                     arquivo = socketClient.recv(tamanhoArquivo)
@@ -117,6 +126,7 @@ def main():
                     # Salva o arquivo na pasta do client
                     with open('./arquivosCliente/' + fileName, 'w+b') as file:
                         file.write(arquivo)
+                    print("SUCCESS")
                 else:
                     print('ERROR')
 

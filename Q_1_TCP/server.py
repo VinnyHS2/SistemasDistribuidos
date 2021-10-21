@@ -2,7 +2,7 @@
     # Questão 1 - TCP Servidor #
     # Autores: Henrique Moura Bini e Vinicius Henrique Soares
     # Data de criação: 12/10/2021
-    # Data de modificação: 12/10/2021
+    # Data de modificação: 20/10/2021
     # Descrição:
         Faz o processamento de mensagens recebidas do cliente, nas quais atualmente são possiveis as seguintes operações:
             - CONNECT user password: Confere os dados informados e realiza a conexão do usuário ao servidor
@@ -156,7 +156,7 @@ def threadConnection(ip, port, connection):
                 connection.send(str(numberFiles).encode('utf-8'))
                 # Envia a lista com o nome dos arquivos para o cliente
                 connection.send(str(listDirName).encode('utf-8'))
-            # Verifica se o número de arquivos for 0
+            # Verifica se o número de arquivos 0
             else:
                 # Envia 0 para o cliente
                 connection.send(('0').encode('utf-8'))
@@ -191,7 +191,7 @@ def main():
     # Variável que armazena uma lista de threads
     threadList = []
 
-    while True:
+    while 1:
         # Limite de 5 conexões
         serverSocket.listen(5)
         # Servidor espera alguem se conectar na porta 5973 está é uma função bloqueante
@@ -212,7 +212,7 @@ def main():
     # Aguarda todas as threads serem finalizadas
     for socketThreads in threadList:
         socketThreads.join()
-
+    
     # Fecha conexão
     serverSocket.close()
 

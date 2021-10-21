@@ -74,7 +74,7 @@ def threadConnection(ip, port, connection):
             arquivos = os.listdir(path='./arquivosServidor/')
             # Verifica se o arquivo foi adicionado
             if fileName in arquivos:
-                # Status code SUCCES
+                # Status code SUCCESS
                 header[2] = 1
                 # Log
                 logger.info('Protocol info: %s', 'ADDFILE SUCCESS', extra=d)
@@ -156,6 +156,7 @@ def threadConnection(ip, port, connection):
                     connection.send(fileNameSizeResponse.to_bytes(1,"big"))
                     # Envia o nome do arquivo
                     connection.send(nameFile.encode())
+                    logger.info('Protocol info: %s', 'GETFILESLIST response sent', extra=d)
             else:
                 # Log
                 logger.info('Protocol info: %s', 'GETFILESLIST error', extra=d)
@@ -224,14 +225,6 @@ def main():
 
         # Adiciona a lista de threads
         vetorThreads.append(thread)
-
-    # Espera a finalização de todas as threads
-    for socketThreads in vetorThreads:
-        # Faz com que o pai aguarde a finalização das threads filhas
-        socketThreads.join()
-
-    # Finaliza a conexao
-    serverSocket.close()
 
 
 main()
