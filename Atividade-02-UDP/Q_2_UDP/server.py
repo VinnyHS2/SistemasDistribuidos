@@ -29,7 +29,6 @@
 
 import math
 import socket
-import threading
 import logging
 import hashlib
 import os
