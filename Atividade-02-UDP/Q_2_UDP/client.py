@@ -133,12 +133,12 @@ def send(file, filename: str, pbar):
     progressTotal = (1/numberOfPackets*100)
     progress = 0
     while(numberOfPackets > 0):
-        # Lê o pacote
+        # Lê o arquivo em 1024 bytes
         data = fileOpened.read(1024)
-        # Faz o envio do pacote para o servidor
         print(' ',end='')
         pbar.setValue(math.ceil(progress) + 1)
         progress += progressTotal
+        # Faz o envio do pacote para o servidor
         socketClient.sendto(data, addr)
         
         # Iteração do número de pacotes
