@@ -129,7 +129,6 @@ def send(file, filename: str, pbar):
     # Volta para o começo do arquivo
     fileOpened.seek(0)
     # Enquanto houver pacotes, será impedido de continuar
-    print('Tentando enviar')
     progressTotal = (1/numberOfPackets*100)
     progress = 0
     while(numberOfPackets > 0):

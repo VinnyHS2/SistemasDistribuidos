@@ -83,7 +83,6 @@ def main():
         checksumLocal = hashlib.sha1(file.read()).hexdigest()
         # Recebe o checksum do arquivo do cliente
         checksumClient, addr = socketServer.recvfrom(1024)
-        print(checksumClient.__sizeof__())
         checksumClient = checksumClient.decode()
         # Verifica se o checksum recebido é igual ao checksum local
         if checksumClient == checksumLocal:
