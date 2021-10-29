@@ -23,22 +23,22 @@
 
     - No ultimo envio é enviado o checksum do arquivo
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |                   checksum: 1 byte                    |
+    |                   checksum: 20 bytes                  |
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 '''
 
-import math
-import socket
-from tqdm import tqdm
 import hashlib
+import math
 import os
+import socket
+import sys
 import tkinter
+from os import environ
+from tkinter import filedialog
+
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-import sys
-from tkinter import filedialog
-from os import environ
 
 ip = "127.0.0.1"
 port = 5973

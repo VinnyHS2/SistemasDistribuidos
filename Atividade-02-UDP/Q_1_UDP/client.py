@@ -22,22 +22,20 @@
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 '''
 
+import re
 import socket
 import sys
-import emoji
-import re
-from emoji.core import emoji_count
 import threading
+
+import emoji
+from emoji.core import emoji_count
 
 ip = "127.0.0.1"
 ports = [9898, 8989]
 
 #Cria um socket do tipo TCP os parametros AF_INET e SOCK_DGRAM definem
 #qual a familia de endereços será utilizada e qual o tipo de socket
-socketClientReceive = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-socketClientSend = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-# #Permite o reuso de endereços ips
-# socketClient.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)  
+socketClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #Função para verificar se uma mensagem é uma url
 def isUrl(url):
     #Regex para verificar se a mensagem é uma url
@@ -53,38 +51,41 @@ def isUrl(url):
 #Função para receber mensagens
 def mensageReceive(ip, port):
     # 
-    socketClientReceive.bind((ip, int(port)))
+    socketClient.bind((ip, int(port)))
     while True:
-        # Recebe a mensagem do chat
-        mensage, ipAddress = socketClientReceive.recvfrom(322)
-        print('')
-        # Atribui o tipo de mensagem para a variável mensageType
-        mensageType = int(mensage[0])
-        # Atribui o tamanho do nickname para a variável nickSize
-        nickSize = int(mensage[1])
-        # Atribui o nick do cliente para a variável nick
-        nick = mensage[2:nickSize+2].decode()
-        # Atribui o tamanho da mensagem para a variável mensageSize
-        mensageSize = mensage[nickSize+2]
-        mensagePosition = int(nickSize + 3)
-        # Atribui a mensagem para a variável mensageContent
-        mensageContent = mensage[mensagePosition : (mensagePosition + mensageSize)].decode()
-        # Verifica se a mensagem é do tipo ECHO
-        if mensageType == 4:
-            mensageType = 1
-            # Formata a mensagem para reenviar
-            mensage = (mensageType.to_bytes(1,'big') + nickSize.to_bytes(1,'big') + nick.encode() + mensageSize.to_bytes(1,'big') + mensageContent.encode())
-            # Envia a mensagem
-            socketClientReceive.sendto(mensage, ipAddress)
-        # Verifica se a mensagem possui emojis
-        elif mensageType == 3:
-            print(nick + ' has sent a link: ' + mensageContent)
-        # Verifica se a mensagem é uma url
-        elif mensageType == 2:
-            print(nick + ' said: ' + emoji.emojize(mensageContent))
-        # Verifica se a mensagem é do tipo normal
-        else:
-            print(nick + ' said: ' + mensageContent)
+        try:
+            # Recebe a mensagem do chat
+            mensage, ipAddress = socketClient.recvfrom(322)
+            print('')
+            # Atribui o tipo de mensagem para a variável mensageType
+            mensageType = int(mensage[0])
+            # Atribui o tamanho do nickname para a variável nickSize
+            nickSize = int(mensage[1])
+            # Atribui o nick do cliente para a variável nick
+            nick = mensage[2:nickSize+2].decode()
+            # Atribui o tamanho da mensagem para a variável mensageSize
+            mensageSize = mensage[nickSize+2]
+            mensagePosition = int(nickSize + 3)
+            # Atribui a mensagem para a variável mensageContent
+            mensageContent = mensage[mensagePosition : (mensagePosition + mensageSize)].decode()
+            # Verifica se a mensagem é do tipo ECHO
+            if mensageType == 4:
+                mensageType = 1
+                # Formata a mensagem para reenviar
+                mensage = (mensageType.to_bytes(1,'big') + nickSize.to_bytes(1,'big') + nick.encode() + mensageSize.to_bytes(1,'big') + mensageContent.encode())
+                # Envia a mensagem
+                socketClient.sendto(mensage, ipAddress)
+            # Verifica se a mensagem possui emojis
+            elif mensageType == 3:
+                print(nick + ' has sent a link: ' + mensageContent)
+            # Verifica se a mensagem é uma url
+            elif mensageType == 2:
+                print(nick + ' said: ' + emoji.emojize(mensageContent))
+            # Verifica se a mensagem é do tipo normal
+            else:
+                print(nick + ' said: ' + mensageContent)
+        except:
+            print("")
 # Função para enviar mensagens
 def mensageSend(ip, port):
     addr = ip, port
@@ -113,7 +114,7 @@ def mensageSend(ip, port):
             # Formata a mensagem para enviar
             mensage = (mensageType.to_bytes(1,'big') + nicknameSize.to_bytes(1,'big') + nickname.encode() + mensageSize.to_bytes(1,'big') + mensage.encode())
             # Envia a mensagem
-            socketClientSend.sendto(mensage, addr)
+            socketClient.sendto(mensage, addr)
 
 def main():
     
@@ -136,12 +137,10 @@ def main():
         # Cria um thread para receber mensagens do chat e enviar mensagens
         # Verifica se o id do cliente é 1
         if(idx == "1"):
-            print("You are connected to the chat")
             threading.Thread(target=mensageReceive, args=(ip, ports[1])).start()
             threading.Thread(target=mensageSend, args=(ip, ports[0])).start()
         # Verifica se o id do cliente é 2
         elif(idx == "2"):
-            print("You are connected to the chat2")
             threading.Thread(target=mensageReceive, args=(ip, ports[0])).start()
             threading.Thread(target=mensageSend, args=(ip, ports[1])).start()
 
