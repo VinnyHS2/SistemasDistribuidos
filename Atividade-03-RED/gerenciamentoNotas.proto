@@ -1,0 +1,94 @@
+syntax ="proto3";
+
+message listarAlunosRequest {
+    string codigoDisciplina = 1;
+    int32 ano = 2;
+    int32 semestre = 3;
+}
+
+message listarAlunosResponse {
+    message Aluno{
+        int32 ra = 1;
+        string nome = 2;
+        int32 periodo = 4;
+    }
+    repeated Aluno alunos = 1;
+}
+
+message alterarNotaRequest {
+    int32 ra = 1;
+    string codigoDisciplina = 2;
+    int32 ano = 3;
+    int32 semestre = 4;
+    float nota = 5;
+}
+
+message alterarNotaResponse {
+    int32 ra = 1;
+    string codigoDisciplina = 2;
+    int32 ano = 3;
+    int32 semestre = 4;
+    float nota = 5;
+}
+
+message alterarFaltasRequest {
+    int32 ra = 1;
+    string codigoDisciplina = 2;
+    int32 ano = 3;
+    int32 semestre = 4;
+    int32 faltas = 5;
+}
+
+message alterarFaltasResponse {
+    int32 ra = 1;
+    string codigoDisciplina = 2;
+    int32 ano = 3;
+    int32 semestre = 4;
+    int32 faltas = 5;    
+}
+
+message listarDisciplinasAlunoRequest {
+    int32 ra = 1;
+    int32 ano = 2;
+    int32 semestre = 3;
+}
+
+message listarDisciplinasAlunoResponse {
+    message DisciplinaAlunos{
+        int32 ra = 1;
+        string nome = 2;
+        float nota = 3;
+        int32 faltas = 4;  
+    }
+    repeated DisciplinaAlunos disciplinas = 1;
+}
+
+message inserirMatriculaRequest {
+    Matricula matricula = 1;
+}
+
+message Matricula{
+    int32 ra = 1;
+    string codigoDisciplina = 2;
+    int32 ano = 3;
+    int32 semestre = 4;
+    optional float nota = 5;
+    optional int32 faltas = 6;
+}
+
+message inserirMatriculaResponse {
+    Matricula matricula = 1;
+}
+
+message listarDisciplinasCursoRequest {
+    int32 codigoCurso = 1;
+}
+
+message listarDisciplinasCursoResponse {
+    message DisciplinaCurso{
+        int32 codigoDisciplina = 1;
+        string nome = 2;
+        string professor = 3;
+    }
+    repeated DisciplinaCurso disciplinas = 1;
+}
