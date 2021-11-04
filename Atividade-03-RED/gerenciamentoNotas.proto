@@ -1,5 +1,9 @@
 syntax ="proto3";
 
+message typeRequest {
+    string messageType = 1;
+}
+
 message listarAlunosRequest {
     string codigoDisciplina = 1;
     int32 ano = 2;
