@@ -197,6 +197,7 @@ def threadConnection(ip, port, connection):
                     connection.send(file)
                     # Log
                     logger.info('Protocol info: %s', 'Upload finished', extra=d)
+                    fileOpen.close()
             else:
                 logger.info('Protocol info: %s', 'GETFILE error', extra=d)
                 # Status code ERROR
