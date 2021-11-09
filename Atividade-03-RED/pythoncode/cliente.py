@@ -1,14 +1,12 @@
 import socket
 import gerenciamentoNotas_pb2
-clientsocket = socket.socket(socket.AFINET, socket.SOCKSTREAM)
+clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientsocket.connect(("localhost", 7000))
 # instanciarepreencheraestrutura
-person = gerenciamentoNotas_pb2.Person()
-person.id = 234
-person.name = "RodrigoCampiolo"
-person.email = "rcampiolo@ibest.com.br"
+requestType = gerenciamentoNotas_pb2.requestType()
+requestType.type = 1
 # marshalling
-msg = person.SerializeToString()
+msg = requestType.SerializeToString()
 size = len(msg)
 clientsocket.send((str(size) + "\n").encode())
 clientsocket.send(msg)

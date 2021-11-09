@@ -12,43 +12,36 @@ public final class GerenciamentoNotas {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface typeRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:typeRequest)
+  public interface requestTypeOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:requestType)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string messageType = 1;</code>
-     * @return The messageType.
+     * <code>int32 type = 1;</code>
+     * @return The type.
      */
-    java.lang.String getMessageType();
-    /**
-     * <code>string messageType = 1;</code>
-     * @return The bytes for messageType.
-     */
-    com.google.protobuf.ByteString
-        getMessageTypeBytes();
+    int getType();
   }
   /**
-   * Protobuf type {@code typeRequest}
+   * Protobuf type {@code requestType}
    */
-  public static final class typeRequest extends
+  public static final class requestType extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:typeRequest)
-      typeRequestOrBuilder {
+      // @@protoc_insertion_point(message_implements:requestType)
+      requestTypeOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use typeRequest.newBuilder() to construct.
-    private typeRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use requestType.newBuilder() to construct.
+    private requestType(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private typeRequest() {
-      messageType_ = "";
+    private requestType() {
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new typeRequest();
+      return new requestType();
     }
 
     @java.lang.Override
@@ -56,7 +49,7 @@ public final class GerenciamentoNotas {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private typeRequest(
+    private requestType(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -74,10 +67,9 @@ public final class GerenciamentoNotas {
             case 0:
               done = true;
               break;
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+            case 8: {
 
-              messageType_ = s;
+              type_ = input.readInt32();
               break;
             }
             default: {
@@ -101,53 +93,26 @@ public final class GerenciamentoNotas {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return GerenciamentoNotas.internal_static_typeRequest_descriptor;
+      return GerenciamentoNotas.internal_static_requestType_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return GerenciamentoNotas.internal_static_typeRequest_fieldAccessorTable
+      return GerenciamentoNotas.internal_static_requestType_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              GerenciamentoNotas.typeRequest.class, GerenciamentoNotas.typeRequest.Builder.class);
+              GerenciamentoNotas.requestType.class, GerenciamentoNotas.requestType.Builder.class);
     }
 
-    public static final int MESSAGETYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object messageType_;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private int type_;
     /**
-     * <code>string messageType = 1;</code>
-     * @return The messageType.
+     * <code>int32 type = 1;</code>
+     * @return The type.
      */
     @java.lang.Override
-    public java.lang.String getMessageType() {
-      java.lang.Object ref = messageType_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        messageType_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string messageType = 1;</code>
-     * @return The bytes for messageType.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getMessageTypeBytes() {
-      java.lang.Object ref = messageType_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        messageType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public int getType() {
+      return type_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -164,8 +129,8 @@ public final class GerenciamentoNotas {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(messageType_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, messageType_);
+      if (type_ != 0) {
+        output.writeInt32(1, type_);
       }
       unknownFields.writeTo(output);
     }
@@ -176,8 +141,9 @@ public final class GerenciamentoNotas {
       if (size != -1) return size;
 
       size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(messageType_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, messageType_);
+      if (type_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, type_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -189,13 +155,13 @@ public final class GerenciamentoNotas {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof GerenciamentoNotas.typeRequest)) {
+      if (!(obj instanceof GerenciamentoNotas.requestType)) {
         return super.equals(obj);
       }
-      GerenciamentoNotas.typeRequest other = (GerenciamentoNotas.typeRequest) obj;
+      GerenciamentoNotas.requestType other = (GerenciamentoNotas.requestType) obj;
 
-      if (!getMessageType()
-          .equals(other.getMessageType())) return false;
+      if (getType()
+          != other.getType()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -207,76 +173,76 @@ public final class GerenciamentoNotas {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + MESSAGETYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getMessageType().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getType();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(byte[] data)
+    public static GerenciamentoNotas.requestType parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(java.io.InputStream input)
+    public static GerenciamentoNotas.requestType parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static GerenciamentoNotas.typeRequest parseDelimitedFrom(java.io.InputStream input)
+    public static GerenciamentoNotas.requestType parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static GerenciamentoNotas.typeRequest parseDelimitedFrom(
+    public static GerenciamentoNotas.requestType parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static GerenciamentoNotas.typeRequest parseFrom(
+    public static GerenciamentoNotas.requestType parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -289,7 +255,7 @@ public final class GerenciamentoNotas {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(GerenciamentoNotas.typeRequest prototype) {
+    public static Builder newBuilder(GerenciamentoNotas.requestType prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -305,26 +271,26 @@ public final class GerenciamentoNotas {
       return builder;
     }
     /**
-     * Protobuf type {@code typeRequest}
+     * Protobuf type {@code requestType}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:typeRequest)
-        GerenciamentoNotas.typeRequestOrBuilder {
+        // @@protoc_insertion_point(builder_implements:requestType)
+        GerenciamentoNotas.requestTypeOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return GerenciamentoNotas.internal_static_typeRequest_descriptor;
+        return GerenciamentoNotas.internal_static_requestType_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return GerenciamentoNotas.internal_static_typeRequest_fieldAccessorTable
+        return GerenciamentoNotas.internal_static_requestType_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                GerenciamentoNotas.typeRequest.class, GerenciamentoNotas.typeRequest.Builder.class);
+                GerenciamentoNotas.requestType.class, GerenciamentoNotas.requestType.Builder.class);
       }
 
-      // Construct using GerenciamentoNotas.typeRequest.newBuilder()
+      // Construct using GerenciamentoNotas.requestType.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -342,7 +308,7 @@ public final class GerenciamentoNotas {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        messageType_ = "";
+        type_ = 0;
 
         return this;
       }
@@ -350,17 +316,17 @@ public final class GerenciamentoNotas {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return GerenciamentoNotas.internal_static_typeRequest_descriptor;
+        return GerenciamentoNotas.internal_static_requestType_descriptor;
       }
 
       @java.lang.Override
-      public GerenciamentoNotas.typeRequest getDefaultInstanceForType() {
-        return GerenciamentoNotas.typeRequest.getDefaultInstance();
+      public GerenciamentoNotas.requestType getDefaultInstanceForType() {
+        return GerenciamentoNotas.requestType.getDefaultInstance();
       }
 
       @java.lang.Override
-      public GerenciamentoNotas.typeRequest build() {
-        GerenciamentoNotas.typeRequest result = buildPartial();
+      public GerenciamentoNotas.requestType build() {
+        GerenciamentoNotas.requestType result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -368,9 +334,9 @@ public final class GerenciamentoNotas {
       }
 
       @java.lang.Override
-      public GerenciamentoNotas.typeRequest buildPartial() {
-        GerenciamentoNotas.typeRequest result = new GerenciamentoNotas.typeRequest(this);
-        result.messageType_ = messageType_;
+      public GerenciamentoNotas.requestType buildPartial() {
+        GerenciamentoNotas.requestType result = new GerenciamentoNotas.requestType(this);
+        result.type_ = type_;
         onBuilt();
         return result;
       }
@@ -409,19 +375,18 @@ public final class GerenciamentoNotas {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof GerenciamentoNotas.typeRequest) {
-          return mergeFrom((GerenciamentoNotas.typeRequest)other);
+        if (other instanceof GerenciamentoNotas.requestType) {
+          return mergeFrom((GerenciamentoNotas.requestType)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(GerenciamentoNotas.typeRequest other) {
-        if (other == GerenciamentoNotas.typeRequest.getDefaultInstance()) return this;
-        if (!other.getMessageType().isEmpty()) {
-          messageType_ = other.messageType_;
-          onChanged();
+      public Builder mergeFrom(GerenciamentoNotas.requestType other) {
+        if (other == GerenciamentoNotas.requestType.getDefaultInstance()) return this;
+        if (other.getType() != 0) {
+          setType(other.getType());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -438,11 +403,11 @@ public final class GerenciamentoNotas {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        GerenciamentoNotas.typeRequest parsedMessage = null;
+        GerenciamentoNotas.requestType parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (GerenciamentoNotas.typeRequest) e.getUnfinishedMessage();
+          parsedMessage = (GerenciamentoNotas.requestType) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -452,78 +417,33 @@ public final class GerenciamentoNotas {
         return this;
       }
 
-      private java.lang.Object messageType_ = "";
+      private int type_ ;
       /**
-       * <code>string messageType = 1;</code>
-       * @return The messageType.
+       * <code>int32 type = 1;</code>
+       * @return The type.
        */
-      public java.lang.String getMessageType() {
-        java.lang.Object ref = messageType_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          messageType_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      @java.lang.Override
+      public int getType() {
+        return type_;
       }
       /**
-       * <code>string messageType = 1;</code>
-       * @return The bytes for messageType.
-       */
-      public com.google.protobuf.ByteString
-          getMessageTypeBytes() {
-        java.lang.Object ref = messageType_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          messageType_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string messageType = 1;</code>
-       * @param value The messageType to set.
+       * <code>int32 type = 1;</code>
+       * @param value The type to set.
        * @return This builder for chaining.
        */
-      public Builder setMessageType(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        messageType_ = value;
+      public Builder setType(int value) {
+        
+        type_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string messageType = 1;</code>
+       * <code>int32 type = 1;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMessageType() {
+      public Builder clearType() {
         
-        messageType_ = getDefaultInstance().getMessageType();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string messageType = 1;</code>
-       * @param value The bytes for messageType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMessageTypeBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        messageType_ = value;
+        type_ = 0;
         onChanged();
         return this;
       }
@@ -540,41 +460,41 @@ public final class GerenciamentoNotas {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:typeRequest)
+      // @@protoc_insertion_point(builder_scope:requestType)
     }
 
-    // @@protoc_insertion_point(class_scope:typeRequest)
-    private static final GerenciamentoNotas.typeRequest DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:requestType)
+    private static final GerenciamentoNotas.requestType DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new GerenciamentoNotas.typeRequest();
+      DEFAULT_INSTANCE = new GerenciamentoNotas.requestType();
     }
 
-    public static GerenciamentoNotas.typeRequest getDefaultInstance() {
+    public static GerenciamentoNotas.requestType getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<typeRequest>
-        PARSER = new com.google.protobuf.AbstractParser<typeRequest>() {
+    private static final com.google.protobuf.Parser<requestType>
+        PARSER = new com.google.protobuf.AbstractParser<requestType>() {
       @java.lang.Override
-      public typeRequest parsePartialFrom(
+      public requestType parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new typeRequest(input, extensionRegistry);
+        return new requestType(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<typeRequest> parser() {
+    public static com.google.protobuf.Parser<requestType> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<typeRequest> getParserForType() {
+    public com.google.protobuf.Parser<requestType> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public GerenciamentoNotas.typeRequest getDefaultInstanceForType() {
+    public GerenciamentoNotas.requestType getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1315,6 +1235,18 @@ public final class GerenciamentoNotas {
      */
     GerenciamentoNotas.listarAlunosResponse.AlunoOrBuilder getAlunosOrBuilder(
         int index);
+
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    java.lang.String getMensagem();
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    com.google.protobuf.ByteString
+        getMensagemBytes();
   }
   /**
    * Protobuf type {@code listarAlunosResponse}
@@ -1330,6 +1262,7 @@ public final class GerenciamentoNotas {
     }
     private listarAlunosResponse() {
       alunos_ = java.util.Collections.emptyList();
+      mensagem_ = "";
     }
 
     @java.lang.Override
@@ -1370,6 +1303,12 @@ public final class GerenciamentoNotas {
               }
               alunos_.add(
                   input.readMessage(GerenciamentoNotas.listarAlunosResponse.Aluno.parser(), extensionRegistry));
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              mensagem_ = s;
               break;
             }
             default: {
@@ -2155,6 +2094,44 @@ public final class GerenciamentoNotas {
       return alunos_.get(index);
     }
 
+    public static final int MENSAGEM_FIELD_NUMBER = 2;
+    private volatile java.lang.Object mensagem_;
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    @java.lang.Override
+    public java.lang.String getMensagem() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mensagem_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMensagemBytes() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mensagem_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2172,6 +2149,9 @@ public final class GerenciamentoNotas {
       for (int i = 0; i < alunos_.size(); i++) {
         output.writeMessage(1, alunos_.get(i));
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, mensagem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -2184,6 +2164,9 @@ public final class GerenciamentoNotas {
       for (int i = 0; i < alunos_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, alunos_.get(i));
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, mensagem_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2202,6 +2185,8 @@ public final class GerenciamentoNotas {
 
       if (!getAlunosList()
           .equals(other.getAlunosList())) return false;
+      if (!getMensagem()
+          .equals(other.getMensagem())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2217,6 +2202,8 @@ public final class GerenciamentoNotas {
         hash = (37 * hash) + ALUNOS_FIELD_NUMBER;
         hash = (53 * hash) + getAlunosList().hashCode();
       }
+      hash = (37 * hash) + MENSAGEM_FIELD_NUMBER;
+      hash = (53 * hash) + getMensagem().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2357,6 +2344,8 @@ public final class GerenciamentoNotas {
         } else {
           alunosBuilder_.clear();
         }
+        mensagem_ = "";
+
         return this;
       }
 
@@ -2393,6 +2382,7 @@ public final class GerenciamentoNotas {
         } else {
           result.alunos_ = alunosBuilder_.build();
         }
+        result.mensagem_ = mensagem_;
         onBuilt();
         return result;
       }
@@ -2466,6 +2456,10 @@ public final class GerenciamentoNotas {
               alunosBuilder_.addAllMessages(other.alunos_);
             }
           }
+        }
+        if (!other.getMensagem().isEmpty()) {
+          mensagem_ = other.mensagem_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2735,6 +2729,82 @@ public final class GerenciamentoNotas {
           alunos_ = null;
         }
         return alunosBuilder_;
+      }
+
+      private java.lang.Object mensagem_ = "";
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The mensagem.
+       */
+      public java.lang.String getMensagem() {
+        java.lang.Object ref = mensagem_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mensagem_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The bytes for mensagem.
+       */
+      public com.google.protobuf.ByteString
+          getMensagemBytes() {
+        java.lang.Object ref = mensagem_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mensagem_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagem(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMensagem() {
+        
+        mensagem_ = getDefaultInstance().getMensagem();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The bytes for mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagemBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mensagem_ = value;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -3678,6 +3748,18 @@ public final class GerenciamentoNotas {
      * @return The nota.
      */
     float getNota();
+
+    /**
+     * <code>string mensagem = 7;</code>
+     * @return The mensagem.
+     */
+    java.lang.String getMensagem();
+    /**
+     * <code>string mensagem = 7;</code>
+     * @return The bytes for mensagem.
+     */
+    com.google.protobuf.ByteString
+        getMensagemBytes();
   }
   /**
    * Protobuf type {@code alterarNotaResponse}
@@ -3693,6 +3775,7 @@ public final class GerenciamentoNotas {
     }
     private alterarNotaResponse() {
       codigoDisciplina_ = "";
+      mensagem_ = "";
     }
 
     @java.lang.Override
@@ -3749,6 +3832,12 @@ public final class GerenciamentoNotas {
             case 45: {
 
               nota_ = input.readFloat();
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              mensagem_ = s;
               break;
             }
             default: {
@@ -3865,6 +3954,44 @@ public final class GerenciamentoNotas {
       return nota_;
     }
 
+    public static final int MENSAGEM_FIELD_NUMBER = 7;
+    private volatile java.lang.Object mensagem_;
+    /**
+     * <code>string mensagem = 7;</code>
+     * @return The mensagem.
+     */
+    @java.lang.Override
+    public java.lang.String getMensagem() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mensagem_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mensagem = 7;</code>
+     * @return The bytes for mensagem.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMensagemBytes() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mensagem_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -3894,6 +4021,9 @@ public final class GerenciamentoNotas {
       if (java.lang.Float.floatToRawIntBits(nota_) != 0) {
         output.writeFloat(5, nota_);
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, mensagem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -3922,6 +4052,9 @@ public final class GerenciamentoNotas {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(5, nota_);
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, mensagem_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -3948,6 +4081,8 @@ public final class GerenciamentoNotas {
       if (java.lang.Float.floatToIntBits(getNota())
           != java.lang.Float.floatToIntBits(
               other.getNota())) return false;
+      if (!getMensagem()
+          .equals(other.getMensagem())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -3970,6 +4105,8 @@ public final class GerenciamentoNotas {
       hash = (37 * hash) + NOTA_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getNota());
+      hash = (37 * hash) + MENSAGEM_FIELD_NUMBER;
+      hash = (53 * hash) + getMensagem().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -4113,6 +4250,8 @@ public final class GerenciamentoNotas {
 
         nota_ = 0F;
 
+        mensagem_ = "";
+
         return this;
       }
 
@@ -4144,6 +4283,7 @@ public final class GerenciamentoNotas {
         result.ano_ = ano_;
         result.semestre_ = semestre_;
         result.nota_ = nota_;
+        result.mensagem_ = mensagem_;
         onBuilt();
         return result;
       }
@@ -4207,6 +4347,10 @@ public final class GerenciamentoNotas {
         }
         if (other.getNota() != 0F) {
           setNota(other.getNota());
+        }
+        if (!other.getMensagem().isEmpty()) {
+          mensagem_ = other.mensagem_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -4433,6 +4577,82 @@ public final class GerenciamentoNotas {
       public Builder clearNota() {
         
         nota_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object mensagem_ = "";
+      /**
+       * <code>string mensagem = 7;</code>
+       * @return The mensagem.
+       */
+      public java.lang.String getMensagem() {
+        java.lang.Object ref = mensagem_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mensagem_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 7;</code>
+       * @return The bytes for mensagem.
+       */
+      public com.google.protobuf.ByteString
+          getMensagemBytes() {
+        java.lang.Object ref = mensagem_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mensagem_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 7;</code>
+       * @param value The mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagem(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMensagem() {
+        
+        mensagem_ = getDefaultInstance().getMensagem();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 7;</code>
+       * @param value The bytes for mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagemBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mensagem_ = value;
         onChanged();
         return this;
       }
@@ -5376,6 +5596,18 @@ public final class GerenciamentoNotas {
      * @return The faltas.
      */
     int getFaltas();
+
+    /**
+     * <code>string mensagem = 6;</code>
+     * @return The mensagem.
+     */
+    java.lang.String getMensagem();
+    /**
+     * <code>string mensagem = 6;</code>
+     * @return The bytes for mensagem.
+     */
+    com.google.protobuf.ByteString
+        getMensagemBytes();
   }
   /**
    * Protobuf type {@code alterarFaltasResponse}
@@ -5391,6 +5623,7 @@ public final class GerenciamentoNotas {
     }
     private alterarFaltasResponse() {
       codigoDisciplina_ = "";
+      mensagem_ = "";
     }
 
     @java.lang.Override
@@ -5447,6 +5680,12 @@ public final class GerenciamentoNotas {
             case 40: {
 
               faltas_ = input.readInt32();
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              mensagem_ = s;
               break;
             }
             default: {
@@ -5563,6 +5802,44 @@ public final class GerenciamentoNotas {
       return faltas_;
     }
 
+    public static final int MENSAGEM_FIELD_NUMBER = 6;
+    private volatile java.lang.Object mensagem_;
+    /**
+     * <code>string mensagem = 6;</code>
+     * @return The mensagem.
+     */
+    @java.lang.Override
+    public java.lang.String getMensagem() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mensagem_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mensagem = 6;</code>
+     * @return The bytes for mensagem.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMensagemBytes() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mensagem_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -5592,6 +5869,9 @@ public final class GerenciamentoNotas {
       if (faltas_ != 0) {
         output.writeInt32(5, faltas_);
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, mensagem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -5620,6 +5900,9 @@ public final class GerenciamentoNotas {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(5, faltas_);
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, mensagem_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -5645,6 +5928,8 @@ public final class GerenciamentoNotas {
           != other.getSemestre()) return false;
       if (getFaltas()
           != other.getFaltas()) return false;
+      if (!getMensagem()
+          .equals(other.getMensagem())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -5666,6 +5951,8 @@ public final class GerenciamentoNotas {
       hash = (53 * hash) + getSemestre();
       hash = (37 * hash) + FALTAS_FIELD_NUMBER;
       hash = (53 * hash) + getFaltas();
+      hash = (37 * hash) + MENSAGEM_FIELD_NUMBER;
+      hash = (53 * hash) + getMensagem().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5809,6 +6096,8 @@ public final class GerenciamentoNotas {
 
         faltas_ = 0;
 
+        mensagem_ = "";
+
         return this;
       }
 
@@ -5840,6 +6129,7 @@ public final class GerenciamentoNotas {
         result.ano_ = ano_;
         result.semestre_ = semestre_;
         result.faltas_ = faltas_;
+        result.mensagem_ = mensagem_;
         onBuilt();
         return result;
       }
@@ -5903,6 +6193,10 @@ public final class GerenciamentoNotas {
         }
         if (other.getFaltas() != 0) {
           setFaltas(other.getFaltas());
+        }
+        if (!other.getMensagem().isEmpty()) {
+          mensagem_ = other.mensagem_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -6129,6 +6423,82 @@ public final class GerenciamentoNotas {
       public Builder clearFaltas() {
         
         faltas_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object mensagem_ = "";
+      /**
+       * <code>string mensagem = 6;</code>
+       * @return The mensagem.
+       */
+      public java.lang.String getMensagem() {
+        java.lang.Object ref = mensagem_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mensagem_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 6;</code>
+       * @return The bytes for mensagem.
+       */
+      public com.google.protobuf.ByteString
+          getMensagemBytes() {
+        java.lang.Object ref = mensagem_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mensagem_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 6;</code>
+       * @param value The mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagem(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMensagem() {
+        
+        mensagem_ = getDefaultInstance().getMensagem();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 6;</code>
+       * @param value The bytes for mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagemBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mensagem_ = value;
         onChanged();
         return this;
       }
@@ -6840,6 +7210,18 @@ public final class GerenciamentoNotas {
      */
     GerenciamentoNotas.listarDisciplinasAlunoResponse.DisciplinaAlunosOrBuilder getDisciplinasOrBuilder(
         int index);
+
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    java.lang.String getMensagem();
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    com.google.protobuf.ByteString
+        getMensagemBytes();
   }
   /**
    * Protobuf type {@code listarDisciplinasAlunoResponse}
@@ -6855,6 +7237,7 @@ public final class GerenciamentoNotas {
     }
     private listarDisciplinasAlunoResponse() {
       disciplinas_ = java.util.Collections.emptyList();
+      mensagem_ = "";
     }
 
     @java.lang.Override
@@ -6895,6 +7278,12 @@ public final class GerenciamentoNotas {
               }
               disciplinas_.add(
                   input.readMessage(GerenciamentoNotas.listarDisciplinasAlunoResponse.DisciplinaAlunos.parser(), extensionRegistry));
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              mensagem_ = s;
               break;
             }
             default: {
@@ -7752,6 +8141,44 @@ public final class GerenciamentoNotas {
       return disciplinas_.get(index);
     }
 
+    public static final int MENSAGEM_FIELD_NUMBER = 2;
+    private volatile java.lang.Object mensagem_;
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    @java.lang.Override
+    public java.lang.String getMensagem() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mensagem_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMensagemBytes() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mensagem_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -7769,6 +8196,9 @@ public final class GerenciamentoNotas {
       for (int i = 0; i < disciplinas_.size(); i++) {
         output.writeMessage(1, disciplinas_.get(i));
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, mensagem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -7781,6 +8211,9 @@ public final class GerenciamentoNotas {
       for (int i = 0; i < disciplinas_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, disciplinas_.get(i));
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, mensagem_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -7799,6 +8232,8 @@ public final class GerenciamentoNotas {
 
       if (!getDisciplinasList()
           .equals(other.getDisciplinasList())) return false;
+      if (!getMensagem()
+          .equals(other.getMensagem())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -7814,6 +8249,8 @@ public final class GerenciamentoNotas {
         hash = (37 * hash) + DISCIPLINAS_FIELD_NUMBER;
         hash = (53 * hash) + getDisciplinasList().hashCode();
       }
+      hash = (37 * hash) + MENSAGEM_FIELD_NUMBER;
+      hash = (53 * hash) + getMensagem().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -7954,6 +8391,8 @@ public final class GerenciamentoNotas {
         } else {
           disciplinasBuilder_.clear();
         }
+        mensagem_ = "";
+
         return this;
       }
 
@@ -7990,6 +8429,7 @@ public final class GerenciamentoNotas {
         } else {
           result.disciplinas_ = disciplinasBuilder_.build();
         }
+        result.mensagem_ = mensagem_;
         onBuilt();
         return result;
       }
@@ -8063,6 +8503,10 @@ public final class GerenciamentoNotas {
               disciplinasBuilder_.addAllMessages(other.disciplinas_);
             }
           }
+        }
+        if (!other.getMensagem().isEmpty()) {
+          mensagem_ = other.mensagem_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -8332,6 +8776,82 @@ public final class GerenciamentoNotas {
           disciplinas_ = null;
         }
         return disciplinasBuilder_;
+      }
+
+      private java.lang.Object mensagem_ = "";
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The mensagem.
+       */
+      public java.lang.String getMensagem() {
+        java.lang.Object ref = mensagem_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mensagem_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The bytes for mensagem.
+       */
+      public com.google.protobuf.ByteString
+          getMensagemBytes() {
+        java.lang.Object ref = mensagem_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mensagem_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagem(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMensagem() {
+        
+        mensagem_ = getDefaultInstance().getMensagem();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The bytes for mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagemBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mensagem_ = value;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -10009,6 +10529,18 @@ public final class GerenciamentoNotas {
      * <code>.Matricula matricula = 1;</code>
      */
     GerenciamentoNotas.MatriculaOrBuilder getMatriculaOrBuilder();
+
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    java.lang.String getMensagem();
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    com.google.protobuf.ByteString
+        getMensagemBytes();
   }
   /**
    * Protobuf type {@code inserirMatriculaResponse}
@@ -10023,6 +10555,7 @@ public final class GerenciamentoNotas {
       super(builder);
     }
     private inserirMatriculaResponse() {
+      mensagem_ = "";
     }
 
     @java.lang.Override
@@ -10066,6 +10599,12 @@ public final class GerenciamentoNotas {
                 matricula_ = subBuilder.buildPartial();
               }
 
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              mensagem_ = s;
               break;
             }
             default: {
@@ -10126,6 +10665,44 @@ public final class GerenciamentoNotas {
       return getMatricula();
     }
 
+    public static final int MENSAGEM_FIELD_NUMBER = 2;
+    private volatile java.lang.Object mensagem_;
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    @java.lang.Override
+    public java.lang.String getMensagem() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mensagem_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMensagemBytes() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mensagem_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -10143,6 +10720,9 @@ public final class GerenciamentoNotas {
       if (matricula_ != null) {
         output.writeMessage(1, getMatricula());
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, mensagem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -10155,6 +10735,9 @@ public final class GerenciamentoNotas {
       if (matricula_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, getMatricula());
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, mensagem_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -10176,6 +10759,8 @@ public final class GerenciamentoNotas {
         if (!getMatricula()
             .equals(other.getMatricula())) return false;
       }
+      if (!getMensagem()
+          .equals(other.getMensagem())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -10191,6 +10776,8 @@ public final class GerenciamentoNotas {
         hash = (37 * hash) + MATRICULA_FIELD_NUMBER;
         hash = (53 * hash) + getMatricula().hashCode();
       }
+      hash = (37 * hash) + MENSAGEM_FIELD_NUMBER;
+      hash = (53 * hash) + getMensagem().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10330,6 +10917,8 @@ public final class GerenciamentoNotas {
           matricula_ = null;
           matriculaBuilder_ = null;
         }
+        mensagem_ = "";
+
         return this;
       }
 
@@ -10361,6 +10950,7 @@ public final class GerenciamentoNotas {
         } else {
           result.matricula_ = matriculaBuilder_.build();
         }
+        result.mensagem_ = mensagem_;
         onBuilt();
         return result;
       }
@@ -10411,6 +11001,10 @@ public final class GerenciamentoNotas {
         if (other == GerenciamentoNotas.inserirMatriculaResponse.getDefaultInstance()) return this;
         if (other.hasMatricula()) {
           mergeMatricula(other.getMatricula());
+        }
+        if (!other.getMensagem().isEmpty()) {
+          mensagem_ = other.mensagem_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -10558,6 +11152,82 @@ public final class GerenciamentoNotas {
           matricula_ = null;
         }
         return matriculaBuilder_;
+      }
+
+      private java.lang.Object mensagem_ = "";
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The mensagem.
+       */
+      public java.lang.String getMensagem() {
+        java.lang.Object ref = mensagem_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mensagem_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The bytes for mensagem.
+       */
+      public com.google.protobuf.ByteString
+          getMensagemBytes() {
+        java.lang.Object ref = mensagem_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mensagem_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagem(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMensagem() {
+        
+        mensagem_ = getDefaultInstance().getMensagem();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The bytes for mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagemBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mensagem_ = value;
+        onChanged();
+        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -11127,6 +11797,18 @@ public final class GerenciamentoNotas {
      */
     GerenciamentoNotas.listarDisciplinasCursoResponse.DisciplinaCursoOrBuilder getDisciplinasOrBuilder(
         int index);
+
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    java.lang.String getMensagem();
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    com.google.protobuf.ByteString
+        getMensagemBytes();
   }
   /**
    * Protobuf type {@code listarDisciplinasCursoResponse}
@@ -11142,6 +11824,7 @@ public final class GerenciamentoNotas {
     }
     private listarDisciplinasCursoResponse() {
       disciplinas_ = java.util.Collections.emptyList();
+      mensagem_ = "";
     }
 
     @java.lang.Override
@@ -11182,6 +11865,12 @@ public final class GerenciamentoNotas {
               }
               disciplinas_.add(
                   input.readMessage(GerenciamentoNotas.listarDisciplinasCursoResponse.DisciplinaCurso.parser(), extensionRegistry));
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              mensagem_ = s;
               break;
             }
             default: {
@@ -12047,6 +12736,44 @@ public final class GerenciamentoNotas {
       return disciplinas_.get(index);
     }
 
+    public static final int MENSAGEM_FIELD_NUMBER = 2;
+    private volatile java.lang.Object mensagem_;
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The mensagem.
+     */
+    @java.lang.Override
+    public java.lang.String getMensagem() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mensagem_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string mensagem = 2;</code>
+     * @return The bytes for mensagem.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getMensagemBytes() {
+      java.lang.Object ref = mensagem_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mensagem_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -12064,6 +12791,9 @@ public final class GerenciamentoNotas {
       for (int i = 0; i < disciplinas_.size(); i++) {
         output.writeMessage(1, disciplinas_.get(i));
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, mensagem_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -12076,6 +12806,9 @@ public final class GerenciamentoNotas {
       for (int i = 0; i < disciplinas_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, disciplinas_.get(i));
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mensagem_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, mensagem_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -12094,6 +12827,8 @@ public final class GerenciamentoNotas {
 
       if (!getDisciplinasList()
           .equals(other.getDisciplinasList())) return false;
+      if (!getMensagem()
+          .equals(other.getMensagem())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -12109,6 +12844,8 @@ public final class GerenciamentoNotas {
         hash = (37 * hash) + DISCIPLINAS_FIELD_NUMBER;
         hash = (53 * hash) + getDisciplinasList().hashCode();
       }
+      hash = (37 * hash) + MENSAGEM_FIELD_NUMBER;
+      hash = (53 * hash) + getMensagem().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -12249,6 +12986,8 @@ public final class GerenciamentoNotas {
         } else {
           disciplinasBuilder_.clear();
         }
+        mensagem_ = "";
+
         return this;
       }
 
@@ -12285,6 +13024,7 @@ public final class GerenciamentoNotas {
         } else {
           result.disciplinas_ = disciplinasBuilder_.build();
         }
+        result.mensagem_ = mensagem_;
         onBuilt();
         return result;
       }
@@ -12358,6 +13098,10 @@ public final class GerenciamentoNotas {
               disciplinasBuilder_.addAllMessages(other.disciplinas_);
             }
           }
+        }
+        if (!other.getMensagem().isEmpty()) {
+          mensagem_ = other.mensagem_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -12628,6 +13372,82 @@ public final class GerenciamentoNotas {
         }
         return disciplinasBuilder_;
       }
+
+      private java.lang.Object mensagem_ = "";
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The mensagem.
+       */
+      public java.lang.String getMensagem() {
+        java.lang.Object ref = mensagem_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          mensagem_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return The bytes for mensagem.
+       */
+      public com.google.protobuf.ByteString
+          getMensagemBytes() {
+        java.lang.Object ref = mensagem_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          mensagem_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagem(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMensagem() {
+        
+        mensagem_ = getDefaultInstance().getMensagem();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string mensagem = 2;</code>
+       * @param value The bytes for mensagem to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMensagemBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        mensagem_ = value;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -12682,10 +13502,10 @@ public final class GerenciamentoNotas {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_typeRequest_descriptor;
+    internal_static_requestType_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_typeRequest_fieldAccessorTable;
+      internal_static_requestType_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_listarAlunosRequest_descriptor;
   private static final 
@@ -12775,54 +13595,56 @@ public final class GerenciamentoNotas {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\030gerenciamentoNotas.proto\"\"\n\013typeReques" +
-      "t\022\023\n\013messageType\030\001 \001(\t\"N\n\023listarAlunosRe" +
-      "quest\022\030\n\020codigoDisciplina\030\001 \001(\t\022\013\n\003ano\030\002" +
-      " \001(\005\022\020\n\010semestre\030\003 \001(\005\"w\n\024listarAlunosRe" +
-      "sponse\022+\n\006alunos\030\001 \003(\0132\033.listarAlunosRes" +
-      "ponse.Aluno\0322\n\005Aluno\022\n\n\002ra\030\001 \001(\005\022\014\n\004nome" +
-      "\030\002 \001(\t\022\017\n\007periodo\030\004 \001(\005\"g\n\022alterarNotaRe" +
-      "quest\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplina\030\002 " +
-      "\001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\014\n\004no" +
-      "ta\030\005 \001(\002\"h\n\023alterarNotaResponse\022\n\n\002ra\030\001 " +
-      "\001(\005\022\030\n\020codigoDisciplina\030\002 \001(\t\022\013\n\003ano\030\003 \001" +
-      "(\005\022\020\n\010semestre\030\004 \001(\005\022\014\n\004nota\030\005 \001(\002\"k\n\024al" +
-      "terarFaltasRequest\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigo" +
-      "Disciplina\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestr" +
-      "e\030\004 \001(\005\022\016\n\006faltas\030\005 \001(\005\"l\n\025alterarFaltas" +
-      "Response\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplina" +
+      "\n\030gerenciamentoNotas.proto\"\033\n\013requestTyp" +
+      "e\022\014\n\004type\030\001 \001(\005\"N\n\023listarAlunosRequest\022\030" +
+      "\n\020codigoDisciplina\030\001 \001(\t\022\013\n\003ano\030\002 \001(\005\022\020\n" +
+      "\010semestre\030\003 \001(\005\"\211\001\n\024listarAlunosResponse" +
+      "\022+\n\006alunos\030\001 \003(\0132\033.listarAlunosResponse." +
+      "Aluno\022\020\n\010mensagem\030\002 \001(\t\0322\n\005Aluno\022\n\n\002ra\030\001" +
+      " \001(\005\022\014\n\004nome\030\002 \001(\t\022\017\n\007periodo\030\004 \001(\005\"g\n\022a" +
+      "lterarNotaRequest\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoD" +
+      "isciplina\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestre" +
+      "\030\004 \001(\005\022\014\n\004nota\030\005 \001(\002\"z\n\023alterarNotaRespo" +
+      "nse\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplina\030\002 \001(" +
+      "\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\014\n\004nota" +
+      "\030\005 \001(\002\022\020\n\010mensagem\030\007 \001(\t\"k\n\024alterarFalta" +
+      "sRequest\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplina" +
       "\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\016\n" +
-      "\006faltas\030\005 \001(\005\"J\n\035listarDisciplinasAlunoR" +
-      "equest\022\n\n\002ra\030\001 \001(\005\022\013\n\003ano\030\002 \001(\005\022\020\n\010semes" +
-      "tre\030\003 \001(\005\"\263\001\n\036listarDisciplinasAlunoResp" +
-      "onse\022E\n\013disciplinas\030\001 \003(\01320.listarDiscip" +
-      "linasAlunoResponse.DisciplinaAlunos\032J\n\020D" +
-      "isciplinaAlunos\022\n\n\002ra\030\001 \001(\005\022\014\n\004nome\030\002 \001(" +
-      "\t\022\014\n\004nota\030\003 \001(\002\022\016\n\006faltas\030\004 \001(\005\"8\n\027inser" +
-      "irMatriculaRequest\022\035\n\tmatricula\030\001 \001(\0132\n." +
-      "Matricula\"\214\001\n\tMatricula\022\n\n\002ra\030\001 \001(\005\022\030\n\020c" +
-      "odigoDisciplina\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010se" +
-      "mestre\030\004 \001(\005\022\021\n\004nota\030\005 \001(\002H\000\210\001\001\022\023\n\006falta" +
-      "s\030\006 \001(\005H\001\210\001\001B\007\n\005_notaB\t\n\007_faltas\"9\n\030inse" +
-      "rirMatriculaResponse\022\035\n\tmatricula\030\001 \001(\0132" +
-      "\n.Matricula\"4\n\035listarDisciplinasCursoReq" +
-      "uest\022\023\n\013codigoCurso\030\001 \001(\005\"\264\001\n\036listarDisc" +
-      "iplinasCursoResponse\022D\n\013disciplinas\030\001 \003(" +
-      "\0132/.listarDisciplinasCursoResponse.Disci" +
-      "plinaCurso\032L\n\017DisciplinaCurso\022\030\n\020codigoD" +
-      "isciplina\030\001 \001(\005\022\014\n\004nome\030\002 \001(\t\022\021\n\tprofess" +
-      "or\030\003 \001(\tb\006proto3"
+      "\006faltas\030\005 \001(\005\"~\n\025alterarFaltasResponse\022\n" +
+      "\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplina\030\002 \001(\t\022\013\n\003" +
+      "ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\016\n\006faltas\030\005 " +
+      "\001(\005\022\020\n\010mensagem\030\006 \001(\t\"J\n\035listarDisciplin" +
+      "asAlunoRequest\022\n\n\002ra\030\001 \001(\005\022\013\n\003ano\030\002 \001(\005\022" +
+      "\020\n\010semestre\030\003 \001(\005\"\305\001\n\036listarDisciplinasA" +
+      "lunoResponse\022E\n\013disciplinas\030\001 \003(\01320.list" +
+      "arDisciplinasAlunoResponse.DisciplinaAlu" +
+      "nos\022\020\n\010mensagem\030\002 \001(\t\032J\n\020DisciplinaAluno" +
+      "s\022\n\n\002ra\030\001 \001(\005\022\014\n\004nome\030\002 \001(\t\022\014\n\004nota\030\003 \001(" +
+      "\002\022\016\n\006faltas\030\004 \001(\005\"8\n\027inserirMatriculaReq" +
+      "uest\022\035\n\tmatricula\030\001 \001(\0132\n.Matricula\"\214\001\n\t" +
+      "Matricula\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplin" +
+      "a\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\021" +
+      "\n\004nota\030\005 \001(\002H\000\210\001\001\022\023\n\006faltas\030\006 \001(\005H\001\210\001\001B\007" +
+      "\n\005_notaB\t\n\007_faltas\"K\n\030inserirMatriculaRe" +
+      "sponse\022\035\n\tmatricula\030\001 \001(\0132\n.Matricula\022\020\n" +
+      "\010mensagem\030\002 \001(\t\"4\n\035listarDisciplinasCurs" +
+      "oRequest\022\023\n\013codigoCurso\030\001 \001(\005\"\306\001\n\036listar" +
+      "DisciplinasCursoResponse\022D\n\013disciplinas\030" +
+      "\001 \003(\0132/.listarDisciplinasCursoResponse.D" +
+      "isciplinaCurso\022\020\n\010mensagem\030\002 \001(\t\032L\n\017Disc" +
+      "iplinaCurso\022\030\n\020codigoDisciplina\030\001 \001(\005\022\014\n" +
+      "\004nome\030\002 \001(\t\022\021\n\tprofessor\030\003 \001(\tb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_typeRequest_descriptor =
+    internal_static_requestType_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_typeRequest_fieldAccessorTable = new
+    internal_static_requestType_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_typeRequest_descriptor,
-        new java.lang.String[] { "MessageType", });
+        internal_static_requestType_descriptor,
+        new java.lang.String[] { "Type", });
     internal_static_listarAlunosRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_listarAlunosRequest_fieldAccessorTable = new
@@ -12834,7 +13656,7 @@ public final class GerenciamentoNotas {
     internal_static_listarAlunosResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_listarAlunosResponse_descriptor,
-        new java.lang.String[] { "Alunos", });
+        new java.lang.String[] { "Alunos", "Mensagem", });
     internal_static_listarAlunosResponse_Aluno_descriptor =
       internal_static_listarAlunosResponse_descriptor.getNestedTypes().get(0);
     internal_static_listarAlunosResponse_Aluno_fieldAccessorTable = new
@@ -12852,7 +13674,7 @@ public final class GerenciamentoNotas {
     internal_static_alterarNotaResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_alterarNotaResponse_descriptor,
-        new java.lang.String[] { "Ra", "CodigoDisciplina", "Ano", "Semestre", "Nota", });
+        new java.lang.String[] { "Ra", "CodigoDisciplina", "Ano", "Semestre", "Nota", "Mensagem", });
     internal_static_alterarFaltasRequest_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_alterarFaltasRequest_fieldAccessorTable = new
@@ -12864,7 +13686,7 @@ public final class GerenciamentoNotas {
     internal_static_alterarFaltasResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_alterarFaltasResponse_descriptor,
-        new java.lang.String[] { "Ra", "CodigoDisciplina", "Ano", "Semestre", "Faltas", });
+        new java.lang.String[] { "Ra", "CodigoDisciplina", "Ano", "Semestre", "Faltas", "Mensagem", });
     internal_static_listarDisciplinasAlunoRequest_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_listarDisciplinasAlunoRequest_fieldAccessorTable = new
@@ -12876,7 +13698,7 @@ public final class GerenciamentoNotas {
     internal_static_listarDisciplinasAlunoResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_listarDisciplinasAlunoResponse_descriptor,
-        new java.lang.String[] { "Disciplinas", });
+        new java.lang.String[] { "Disciplinas", "Mensagem", });
     internal_static_listarDisciplinasAlunoResponse_DisciplinaAlunos_descriptor =
       internal_static_listarDisciplinasAlunoResponse_descriptor.getNestedTypes().get(0);
     internal_static_listarDisciplinasAlunoResponse_DisciplinaAlunos_fieldAccessorTable = new
@@ -12900,7 +13722,7 @@ public final class GerenciamentoNotas {
     internal_static_inserirMatriculaResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_inserirMatriculaResponse_descriptor,
-        new java.lang.String[] { "Matricula", });
+        new java.lang.String[] { "Matricula", "Mensagem", });
     internal_static_listarDisciplinasCursoRequest_descriptor =
       getDescriptor().getMessageTypes().get(12);
     internal_static_listarDisciplinasCursoRequest_fieldAccessorTable = new
@@ -12912,7 +13734,7 @@ public final class GerenciamentoNotas {
     internal_static_listarDisciplinasCursoResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_listarDisciplinasCursoResponse_descriptor,
-        new java.lang.String[] { "Disciplinas", });
+        new java.lang.String[] { "Disciplinas", "Mensagem", });
     internal_static_listarDisciplinasCursoResponse_DisciplinaCurso_descriptor =
       internal_static_listarDisciplinasCursoResponse_descriptor.getNestedTypes().get(0);
     internal_static_listarDisciplinasCursoResponse_DisciplinaCurso_fieldAccessorTable = new

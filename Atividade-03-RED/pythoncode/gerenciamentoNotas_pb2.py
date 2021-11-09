@@ -14,11 +14,11 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18gerenciamentoNotas.proto\"\"\n\x0btypeRequest\x12\x13\n\x0bmessageType\x18\x01 \x01(\t\"N\n\x13listarAlunosRequest\x12\x18\n\x10\x63odigoDisciplina\x18\x01 \x01(\t\x12\x0b\n\x03\x61no\x18\x02 \x01(\x05\x12\x10\n\x08semestre\x18\x03 \x01(\x05\"w\n\x14listarAlunosResponse\x12+\n\x06\x61lunos\x18\x01 \x03(\x0b\x32\x1b.listarAlunosResponse.Aluno\x1a\x32\n\x05\x41luno\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x0c\n\x04nome\x18\x02 \x01(\t\x12\x0f\n\x07periodo\x18\x04 \x01(\x05\"g\n\x12\x61lterarNotaRequest\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0c\n\x04nota\x18\x05 \x01(\x02\"h\n\x13\x61lterarNotaResponse\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0c\n\x04nota\x18\x05 \x01(\x02\"k\n\x14\x61lterarFaltasRequest\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0e\n\x06\x66\x61ltas\x18\x05 \x01(\x05\"l\n\x15\x61lterarFaltasResponse\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0e\n\x06\x66\x61ltas\x18\x05 \x01(\x05\"J\n\x1dlistarDisciplinasAlunoRequest\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x0b\n\x03\x61no\x18\x02 \x01(\x05\x12\x10\n\x08semestre\x18\x03 \x01(\x05\"\xb3\x01\n\x1elistarDisciplinasAlunoResponse\x12\x45\n\x0b\x64isciplinas\x18\x01 \x03(\x0b\x32\x30.listarDisciplinasAlunoResponse.DisciplinaAlunos\x1aJ\n\x10\x44isciplinaAlunos\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x0c\n\x04nome\x18\x02 \x01(\t\x12\x0c\n\x04nota\x18\x03 \x01(\x02\x12\x0e\n\x06\x66\x61ltas\x18\x04 \x01(\x05\"8\n\x17inserirMatriculaRequest\x12\x1d\n\tmatricula\x18\x01 \x01(\x0b\x32\n.Matricula\"\x8c\x01\n\tMatricula\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x11\n\x04nota\x18\x05 \x01(\x02H\x00\x88\x01\x01\x12\x13\n\x06\x66\x61ltas\x18\x06 \x01(\x05H\x01\x88\x01\x01\x42\x07\n\x05_notaB\t\n\x07_faltas\"9\n\x18inserirMatriculaResponse\x12\x1d\n\tmatricula\x18\x01 \x01(\x0b\x32\n.Matricula\"4\n\x1dlistarDisciplinasCursoRequest\x12\x13\n\x0b\x63odigoCurso\x18\x01 \x01(\x05\"\xb4\x01\n\x1elistarDisciplinasCursoResponse\x12\x44\n\x0b\x64isciplinas\x18\x01 \x03(\x0b\x32/.listarDisciplinasCursoResponse.DisciplinaCurso\x1aL\n\x0f\x44isciplinaCurso\x12\x18\n\x10\x63odigoDisciplina\x18\x01 \x01(\x05\x12\x0c\n\x04nome\x18\x02 \x01(\t\x12\x11\n\tprofessor\x18\x03 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x18gerenciamentoNotas.proto\"\x1b\n\x0brequestType\x12\x0c\n\x04type\x18\x01 \x01(\x05\"N\n\x13listarAlunosRequest\x12\x18\n\x10\x63odigoDisciplina\x18\x01 \x01(\t\x12\x0b\n\x03\x61no\x18\x02 \x01(\x05\x12\x10\n\x08semestre\x18\x03 \x01(\x05\"\x89\x01\n\x14listarAlunosResponse\x12+\n\x06\x61lunos\x18\x01 \x03(\x0b\x32\x1b.listarAlunosResponse.Aluno\x12\x10\n\x08mensagem\x18\x02 \x01(\t\x1a\x32\n\x05\x41luno\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x0c\n\x04nome\x18\x02 \x01(\t\x12\x0f\n\x07periodo\x18\x04 \x01(\x05\"g\n\x12\x61lterarNotaRequest\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0c\n\x04nota\x18\x05 \x01(\x02\"z\n\x13\x61lterarNotaResponse\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0c\n\x04nota\x18\x05 \x01(\x02\x12\x10\n\x08mensagem\x18\x07 \x01(\t\"k\n\x14\x61lterarFaltasRequest\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0e\n\x06\x66\x61ltas\x18\x05 \x01(\x05\"~\n\x15\x61lterarFaltasResponse\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x0e\n\x06\x66\x61ltas\x18\x05 \x01(\x05\x12\x10\n\x08mensagem\x18\x06 \x01(\t\"J\n\x1dlistarDisciplinasAlunoRequest\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x0b\n\x03\x61no\x18\x02 \x01(\x05\x12\x10\n\x08semestre\x18\x03 \x01(\x05\"\xc5\x01\n\x1elistarDisciplinasAlunoResponse\x12\x45\n\x0b\x64isciplinas\x18\x01 \x03(\x0b\x32\x30.listarDisciplinasAlunoResponse.DisciplinaAlunos\x12\x10\n\x08mensagem\x18\x02 \x01(\t\x1aJ\n\x10\x44isciplinaAlunos\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x0c\n\x04nome\x18\x02 \x01(\t\x12\x0c\n\x04nota\x18\x03 \x01(\x02\x12\x0e\n\x06\x66\x61ltas\x18\x04 \x01(\x05\"8\n\x17inserirMatriculaRequest\x12\x1d\n\tmatricula\x18\x01 \x01(\x0b\x32\n.Matricula\"\x8c\x01\n\tMatricula\x12\n\n\x02ra\x18\x01 \x01(\x05\x12\x18\n\x10\x63odigoDisciplina\x18\x02 \x01(\t\x12\x0b\n\x03\x61no\x18\x03 \x01(\x05\x12\x10\n\x08semestre\x18\x04 \x01(\x05\x12\x11\n\x04nota\x18\x05 \x01(\x02H\x00\x88\x01\x01\x12\x13\n\x06\x66\x61ltas\x18\x06 \x01(\x05H\x01\x88\x01\x01\x42\x07\n\x05_notaB\t\n\x07_faltas\"K\n\x18inserirMatriculaResponse\x12\x1d\n\tmatricula\x18\x01 \x01(\x0b\x32\n.Matricula\x12\x10\n\x08mensagem\x18\x02 \x01(\t\"4\n\x1dlistarDisciplinasCursoRequest\x12\x13\n\x0b\x63odigoCurso\x18\x01 \x01(\x05\"\xc6\x01\n\x1elistarDisciplinasCursoResponse\x12\x44\n\x0b\x64isciplinas\x18\x01 \x03(\x0b\x32/.listarDisciplinasCursoResponse.DisciplinaCurso\x12\x10\n\x08mensagem\x18\x02 \x01(\t\x1aL\n\x0f\x44isciplinaCurso\x12\x18\n\x10\x63odigoDisciplina\x18\x01 \x01(\x05\x12\x0c\n\x04nome\x18\x02 \x01(\t\x12\x11\n\tprofessor\x18\x03 \x01(\tb\x06proto3')
 
 
 
-_TYPEREQUEST = DESCRIPTOR.message_types_by_name['typeRequest']
+_REQUESTTYPE = DESCRIPTOR.message_types_by_name['requestType']
 _LISTARALUNOSREQUEST = DESCRIPTOR.message_types_by_name['listarAlunosRequest']
 _LISTARALUNOSRESPONSE = DESCRIPTOR.message_types_by_name['listarAlunosResponse']
 _LISTARALUNOSRESPONSE_ALUNO = _LISTARALUNOSRESPONSE.nested_types_by_name['Aluno']
@@ -35,12 +35,12 @@ _INSERIRMATRICULARESPONSE = DESCRIPTOR.message_types_by_name['inserirMatriculaRe
 _LISTARDISCIPLINASCURSOREQUEST = DESCRIPTOR.message_types_by_name['listarDisciplinasCursoRequest']
 _LISTARDISCIPLINASCURSORESPONSE = DESCRIPTOR.message_types_by_name['listarDisciplinasCursoResponse']
 _LISTARDISCIPLINASCURSORESPONSE_DISCIPLINACURSO = _LISTARDISCIPLINASCURSORESPONSE.nested_types_by_name['DisciplinaCurso']
-typeRequest = _reflection.GeneratedProtocolMessageType('typeRequest', (_message.Message,), {
-  'DESCRIPTOR' : _TYPEREQUEST,
+requestType = _reflection.GeneratedProtocolMessageType('requestType', (_message.Message,), {
+  'DESCRIPTOR' : _REQUESTTYPE,
   '__module__' : 'gerenciamentoNotas_pb2'
-  # @@protoc_insertion_point(class_scope:typeRequest)
+  # @@protoc_insertion_point(class_scope:requestType)
   })
-_sym_db.RegisterMessage(typeRequest)
+_sym_db.RegisterMessage(requestType)
 
 listarAlunosRequest = _reflection.GeneratedProtocolMessageType('listarAlunosRequest', (_message.Message,), {
   'DESCRIPTOR' : _LISTARALUNOSREQUEST,
@@ -160,38 +160,38 @@ _sym_db.RegisterMessage(listarDisciplinasCursoResponse.DisciplinaCurso)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _TYPEREQUEST._serialized_start=28
-  _TYPEREQUEST._serialized_end=62
-  _LISTARALUNOSREQUEST._serialized_start=64
-  _LISTARALUNOSREQUEST._serialized_end=142
-  _LISTARALUNOSRESPONSE._serialized_start=144
-  _LISTARALUNOSRESPONSE._serialized_end=263
-  _LISTARALUNOSRESPONSE_ALUNO._serialized_start=213
-  _LISTARALUNOSRESPONSE_ALUNO._serialized_end=263
-  _ALTERARNOTAREQUEST._serialized_start=265
-  _ALTERARNOTAREQUEST._serialized_end=368
-  _ALTERARNOTARESPONSE._serialized_start=370
-  _ALTERARNOTARESPONSE._serialized_end=474
-  _ALTERARFALTASREQUEST._serialized_start=476
-  _ALTERARFALTASREQUEST._serialized_end=583
-  _ALTERARFALTASRESPONSE._serialized_start=585
-  _ALTERARFALTASRESPONSE._serialized_end=693
-  _LISTARDISCIPLINASALUNOREQUEST._serialized_start=695
-  _LISTARDISCIPLINASALUNOREQUEST._serialized_end=769
-  _LISTARDISCIPLINASALUNORESPONSE._serialized_start=772
-  _LISTARDISCIPLINASALUNORESPONSE._serialized_end=951
-  _LISTARDISCIPLINASALUNORESPONSE_DISCIPLINAALUNOS._serialized_start=877
-  _LISTARDISCIPLINASALUNORESPONSE_DISCIPLINAALUNOS._serialized_end=951
-  _INSERIRMATRICULAREQUEST._serialized_start=953
-  _INSERIRMATRICULAREQUEST._serialized_end=1009
-  _MATRICULA._serialized_start=1012
-  _MATRICULA._serialized_end=1152
-  _INSERIRMATRICULARESPONSE._serialized_start=1154
-  _INSERIRMATRICULARESPONSE._serialized_end=1211
-  _LISTARDISCIPLINASCURSOREQUEST._serialized_start=1213
-  _LISTARDISCIPLINASCURSOREQUEST._serialized_end=1265
-  _LISTARDISCIPLINASCURSORESPONSE._serialized_start=1268
-  _LISTARDISCIPLINASCURSORESPONSE._serialized_end=1448
-  _LISTARDISCIPLINASCURSORESPONSE_DISCIPLINACURSO._serialized_start=1372
-  _LISTARDISCIPLINASCURSORESPONSE_DISCIPLINACURSO._serialized_end=1448
+  _REQUESTTYPE._serialized_start=28
+  _REQUESTTYPE._serialized_end=55
+  _LISTARALUNOSREQUEST._serialized_start=57
+  _LISTARALUNOSREQUEST._serialized_end=135
+  _LISTARALUNOSRESPONSE._serialized_start=138
+  _LISTARALUNOSRESPONSE._serialized_end=275
+  _LISTARALUNOSRESPONSE_ALUNO._serialized_start=225
+  _LISTARALUNOSRESPONSE_ALUNO._serialized_end=275
+  _ALTERARNOTAREQUEST._serialized_start=277
+  _ALTERARNOTAREQUEST._serialized_end=380
+  _ALTERARNOTARESPONSE._serialized_start=382
+  _ALTERARNOTARESPONSE._serialized_end=504
+  _ALTERARFALTASREQUEST._serialized_start=506
+  _ALTERARFALTASREQUEST._serialized_end=613
+  _ALTERARFALTASRESPONSE._serialized_start=615
+  _ALTERARFALTASRESPONSE._serialized_end=741
+  _LISTARDISCIPLINASALUNOREQUEST._serialized_start=743
+  _LISTARDISCIPLINASALUNOREQUEST._serialized_end=817
+  _LISTARDISCIPLINASALUNORESPONSE._serialized_start=820
+  _LISTARDISCIPLINASALUNORESPONSE._serialized_end=1017
+  _LISTARDISCIPLINASALUNORESPONSE_DISCIPLINAALUNOS._serialized_start=943
+  _LISTARDISCIPLINASALUNORESPONSE_DISCIPLINAALUNOS._serialized_end=1017
+  _INSERIRMATRICULAREQUEST._serialized_start=1019
+  _INSERIRMATRICULAREQUEST._serialized_end=1075
+  _MATRICULA._serialized_start=1078
+  _MATRICULA._serialized_end=1218
+  _INSERIRMATRICULARESPONSE._serialized_start=1220
+  _INSERIRMATRICULARESPONSE._serialized_end=1295
+  _LISTARDISCIPLINASCURSOREQUEST._serialized_start=1297
+  _LISTARDISCIPLINASCURSOREQUEST._serialized_end=1349
+  _LISTARDISCIPLINASCURSORESPONSE._serialized_start=1352
+  _LISTARDISCIPLINASCURSORESPONSE._serialized_end=1550
+  _LISTARDISCIPLINASCURSORESPONSE_DISCIPLINACURSO._serialized_start=1474
+  _LISTARDISCIPLINASCURSORESPONSE_DISCIPLINACURSO._serialized_end=1550
 # @@protoc_insertion_point(module_scope)
