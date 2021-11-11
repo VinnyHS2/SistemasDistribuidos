@@ -36,7 +36,7 @@ public class servidor {
     public static GerenciamentoNotas.listarAlunosResponse listarAlunos(Connection connection, String codigoDisciplina, int ano, int semestre) {        
         GerenciamentoNotas.listarAlunosResponse.Builder response = GerenciamentoNotas.listarAlunosResponse.newBuilder();
         try{
-
+            // TODO: verificar se a disciplina existe
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT a.* FROM matricula m INNER JOIN aluno a ON (a.ra = m.ra) WHERE '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
@@ -61,14 +61,12 @@ public class servidor {
     public static GerenciamentoNotas.alterarNotaResponse alterarNota(Connection connection, int ra, String codigoDisciplina, int ano, int semestre , float nota) {        
         GerenciamentoNotas.alterarNotaResponse.Builder response = GerenciamentoNotas.alterarNotaResponse.newBuilder();
         try{
-
+            // TODO verificar se o aluno está matriculado na disciplina
+            // TODO verificar se a disciplina existe
+            // TODO verificar se a nota é válida
             Statement statement = connection.createStatement();
             statement.execute("UPDATE matricula SET nota = " + nota + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
-            if(!rs.isBeforeFirst()){
-                response.setMensagem("Não há disciplinas cadastradas neste curso");
-                return response.build();
-            }
             response.setRa(rs.getInt("ra"));
             response.setAno(rs.getInt("ano"));
             response.setSemestre(rs.getInt("semestre"));
@@ -85,14 +83,12 @@ public class servidor {
     public static GerenciamentoNotas.alterarFaltasResponse alterarFaltas(Connection connection, int ra, String codigoDisciplina, int ano, int semestre, int faltas) {        
         GerenciamentoNotas.alterarFaltasResponse.Builder response = GerenciamentoNotas.alterarFaltasResponse.newBuilder();
         try{
+            // TODO verificar se o aluno está matriculado na disciplina
+            // TODO verificar se a disciplina existe
 
             Statement statement = connection.createStatement();
             statement.execute("UPDATE matricula SET faltas = " + faltas + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
-            if(!rs.isBeforeFirst()){
-                response.setMensagem("Não há disciplinas cadastradas neste curso");
-                return response.build();
-            }
             response.setRa(rs.getInt("ra"));
             response.setAno(rs.getInt("ano"));
             response.setSemestre(rs.getInt("semestre"));
@@ -139,7 +135,7 @@ public class servidor {
             /*Listagem de disciplinas, faltas e notas (RA, nome, nota, faltas) de um aluno informado o ano e semestre.*/ 
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Não há disciplinas cadastradas neste curso");
+                response.setMensagem("O aluno não está cadastrado em nenhuma disciplina");
                 return response.build();
             }
             while(rs.next()){
@@ -167,7 +163,7 @@ public class servidor {
             statement.execute("INSERT INTO matricula (ra, cod_disciplina, ano, semestre, nota, faltas) VALUES (" + ra + ", '" + String.valueOf(codigoDisciplina) + "', " + ano + ", " + semestre + ", 0, 0);");
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Não há alunos matriculados nessa disciplina");
+                response.setMensagem("Não foi possível realizar a matrícula");
                 return response.build();
             }
             while(rs.next()){
