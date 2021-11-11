@@ -200,11 +200,11 @@ public class servidor {
             byte[] msg;
             String responseSize;
             byte[] size;
+            Socket clientSocket = listenSocket.accept();
+            // BufferedReader dataaa = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            DataInputStream inClient = new DataInputStream(clientSocket.getInputStream());
+            DataOutputStream outClient = new DataOutputStream(clientSocket.getOutputStream());
             while (true) {
-                Socket clientSocket = listenSocket.accept();
-                // BufferedReader dataaa = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                DataInputStream inClient = new DataInputStream(clientSocket.getInputStream());
-                DataOutputStream outClient = new DataOutputStream(clientSocket.getOutputStream());
                 valueStr = inClient.readLine();
                 sizeBuffer = Integer.valueOf(valueStr);
                 buffer = new byte[sizeBuffer];
