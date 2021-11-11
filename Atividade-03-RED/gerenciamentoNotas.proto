@@ -96,7 +96,7 @@ message listarDisciplinasCursoRequest {
 
 message listarDisciplinasCursoResponse {
     message DisciplinaCurso{
-        int32 codigoDisciplina = 1;
+        string codigoDisciplina = 1;
         string nome = 2;
         string professor = 3;
     }

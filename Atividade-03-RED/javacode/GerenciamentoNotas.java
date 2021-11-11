@@ -11913,10 +11913,16 @@ public final class GerenciamentoNotas {
         com.google.protobuf.MessageOrBuilder {
 
       /**
-       * <code>int32 codigoDisciplina = 1;</code>
+       * <code>string codigoDisciplina = 1;</code>
        * @return The codigoDisciplina.
        */
-      int getCodigoDisciplina();
+      java.lang.String getCodigoDisciplina();
+      /**
+       * <code>string codigoDisciplina = 1;</code>
+       * @return The bytes for codigoDisciplina.
+       */
+      com.google.protobuf.ByteString
+          getCodigoDisciplinaBytes();
 
       /**
        * <code>string nome = 2;</code>
@@ -11955,6 +11961,7 @@ public final class GerenciamentoNotas {
         super(builder);
       }
       private DisciplinaCurso() {
+        codigoDisciplina_ = "";
         nome_ = "";
         professor_ = "";
       }
@@ -11989,9 +11996,10 @@ public final class GerenciamentoNotas {
               case 0:
                 done = true;
                 break;
-              case 8: {
+              case 10: {
+                java.lang.String s = input.readStringRequireUtf8();
 
-                codigoDisciplina_ = input.readInt32();
+                codigoDisciplina_ = s;
                 break;
               }
               case 18: {
@@ -12039,14 +12047,41 @@ public final class GerenciamentoNotas {
       }
 
       public static final int CODIGODISCIPLINA_FIELD_NUMBER = 1;
-      private int codigoDisciplina_;
+      private volatile java.lang.Object codigoDisciplina_;
       /**
-       * <code>int32 codigoDisciplina = 1;</code>
+       * <code>string codigoDisciplina = 1;</code>
        * @return The codigoDisciplina.
        */
       @java.lang.Override
-      public int getCodigoDisciplina() {
-        return codigoDisciplina_;
+      public java.lang.String getCodigoDisciplina() {
+        java.lang.Object ref = codigoDisciplina_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          codigoDisciplina_ = s;
+          return s;
+        }
+      }
+      /**
+       * <code>string codigoDisciplina = 1;</code>
+       * @return The bytes for codigoDisciplina.
+       */
+      @java.lang.Override
+      public com.google.protobuf.ByteString
+          getCodigoDisciplinaBytes() {
+        java.lang.Object ref = codigoDisciplina_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          codigoDisciplina_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
 
       public static final int NOME_FIELD_NUMBER = 2;
@@ -12139,8 +12174,8 @@ public final class GerenciamentoNotas {
       @java.lang.Override
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
-        if (codigoDisciplina_ != 0) {
-          output.writeInt32(1, codigoDisciplina_);
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(codigoDisciplina_)) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 1, codigoDisciplina_);
         }
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nome_)) {
           com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nome_);
@@ -12157,9 +12192,8 @@ public final class GerenciamentoNotas {
         if (size != -1) return size;
 
         size = 0;
-        if (codigoDisciplina_ != 0) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeInt32Size(1, codigoDisciplina_);
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(codigoDisciplina_)) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, codigoDisciplina_);
         }
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nome_)) {
           size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nome_);
@@ -12182,8 +12216,8 @@ public final class GerenciamentoNotas {
         }
         GerenciamentoNotas.listarDisciplinasCursoResponse.DisciplinaCurso other = (GerenciamentoNotas.listarDisciplinasCursoResponse.DisciplinaCurso) obj;
 
-        if (getCodigoDisciplina()
-            != other.getCodigoDisciplina()) return false;
+        if (!getCodigoDisciplina()
+            .equals(other.getCodigoDisciplina())) return false;
         if (!getNome()
             .equals(other.getNome())) return false;
         if (!getProfessor()
@@ -12200,7 +12234,7 @@ public final class GerenciamentoNotas {
         int hash = 41;
         hash = (19 * hash) + getDescriptor().hashCode();
         hash = (37 * hash) + CODIGODISCIPLINA_FIELD_NUMBER;
-        hash = (53 * hash) + getCodigoDisciplina();
+        hash = (53 * hash) + getCodigoDisciplina().hashCode();
         hash = (37 * hash) + NOME_FIELD_NUMBER;
         hash = (53 * hash) + getNome().hashCode();
         hash = (37 * hash) + PROFESSOR_FIELD_NUMBER;
@@ -12338,7 +12372,7 @@ public final class GerenciamentoNotas {
         @java.lang.Override
         public Builder clear() {
           super.clear();
-          codigoDisciplina_ = 0;
+          codigoDisciplina_ = "";
 
           nome_ = "";
 
@@ -12421,8 +12455,9 @@ public final class GerenciamentoNotas {
 
         public Builder mergeFrom(GerenciamentoNotas.listarDisciplinasCursoResponse.DisciplinaCurso other) {
           if (other == GerenciamentoNotas.listarDisciplinasCursoResponse.DisciplinaCurso.getDefaultInstance()) return this;
-          if (other.getCodigoDisciplina() != 0) {
-            setCodigoDisciplina(other.getCodigoDisciplina());
+          if (!other.getCodigoDisciplina().isEmpty()) {
+            codigoDisciplina_ = other.codigoDisciplina_;
+            onChanged();
           }
           if (!other.getNome().isEmpty()) {
             nome_ = other.nome_;
@@ -12461,33 +12496,78 @@ public final class GerenciamentoNotas {
           return this;
         }
 
-        private int codigoDisciplina_ ;
+        private java.lang.Object codigoDisciplina_ = "";
         /**
-         * <code>int32 codigoDisciplina = 1;</code>
+         * <code>string codigoDisciplina = 1;</code>
          * @return The codigoDisciplina.
          */
-        @java.lang.Override
-        public int getCodigoDisciplina() {
-          return codigoDisciplina_;
+        public java.lang.String getCodigoDisciplina() {
+          java.lang.Object ref = codigoDisciplina_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            codigoDisciplina_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
         }
         /**
-         * <code>int32 codigoDisciplina = 1;</code>
+         * <code>string codigoDisciplina = 1;</code>
+         * @return The bytes for codigoDisciplina.
+         */
+        public com.google.protobuf.ByteString
+            getCodigoDisciplinaBytes() {
+          java.lang.Object ref = codigoDisciplina_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            codigoDisciplina_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string codigoDisciplina = 1;</code>
          * @param value The codigoDisciplina to set.
          * @return This builder for chaining.
          */
-        public Builder setCodigoDisciplina(int value) {
-          
+        public Builder setCodigoDisciplina(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
           codigoDisciplina_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>int32 codigoDisciplina = 1;</code>
+         * <code>string codigoDisciplina = 1;</code>
          * @return This builder for chaining.
          */
         public Builder clearCodigoDisciplina() {
           
-          codigoDisciplina_ = 0;
+          codigoDisciplina_ = getDefaultInstance().getCodigoDisciplina();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string codigoDisciplina = 1;</code>
+         * @param value The bytes for codigoDisciplina to set.
+         * @return This builder for chaining.
+         */
+        public Builder setCodigoDisciplinaBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
+          codigoDisciplina_ = value;
           onChanged();
           return this;
         }
@@ -13632,7 +13712,7 @@ public final class GerenciamentoNotas {
       "DisciplinasCursoResponse\022D\n\013disciplinas\030" +
       "\001 \003(\0132/.listarDisciplinasCursoResponse.D" +
       "isciplinaCurso\022\020\n\010mensagem\030\002 \001(\t\032L\n\017Disc" +
-      "iplinaCurso\022\030\n\020codigoDisciplina\030\001 \001(\005\022\014\n" +
+      "iplinaCurso\022\030\n\020codigoDisciplina\030\001 \001(\t\022\014\n" +
       "\004nome\030\002 \001(\t\022\021\n\tprofessor\030\003 \001(\tb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
