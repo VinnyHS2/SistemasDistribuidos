@@ -29,9 +29,7 @@ def dadosRequisicao(opcao):
         codigoDisciplina = (input("Digite o código da disciplina: "))
         ano = input("Digite o ano: ")
         semestre = input("Digite o semestre: ")
-        if codigoDisciplina == "" or ano == "" or semestre == "":
-            print("Algum dos campos não foi preenchido corretamente")
-        elif ano.isdigit() and semestre.isdigit():
+        if ano.isdigit() and semestre.isdigit() and codigoDisciplina != "" and ano != "" and semestre != "":
             request.codigoDisciplina = codigoDisciplina
             request.ano = int(ano)
             request.semestre = int(semestre)
@@ -40,6 +38,8 @@ def dadosRequisicao(opcao):
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
+        else:
+            print("Algum dos campos não foi preenchido corretamente")
 
     elif opcao == ALTERAR_NOTA:
         request = gerenciamentoNotas_pb2.alterarNotaRequest()
@@ -48,9 +48,7 @@ def dadosRequisicao(opcao):
         ano = input("Digite o ano da disciplina: ")
         semestre = input("Digite o semestre da disciplina: ")
         nota = input("Digite a nota do aluno: ")
-        if ra == '' or codigoDisciplina == '' or ano == '' or semestre == '' or nota == '':
-            print("Algum dos campos não foi preenchido corretamente")
-        elif ra.isdigit() and ano.isdigit() and semestre.isdigit() and nota.isdigit():
+        if ra.isdigit() and ano.isdigit() and semestre.isdigit() and nota.isdigit() and codigoDisciplina != "" and ano != "" and semestre != "" and nota != "" and ra != "":
             request.ra = int(ra)
             request.codigoDisciplina = codigoDisciplina
             request.ano = int(ano)
@@ -61,6 +59,8 @@ def dadosRequisicao(opcao):
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
+        else:
+            print("Algum dos campos não foi preenchido corretamente")
 
     elif opcao == ALTERAR_FALTAS:
         request = gerenciamentoNotas_pb2.alterarFaltasRequest()
@@ -69,9 +69,7 @@ def dadosRequisicao(opcao):
         ano = input("Digite o ano da disciplina: ")
         semestre = input("Digite o semestre da disciplina: ")
         faltas = input("Digite a quantidade de faltas do aluno: ")
-        if ra == '' or codigoDisciplina == '' or ano == '' or semestre == '' or faltas == '':
-            print("Algum dos campos não foi preenchido corretamente")
-        elif ra.isdigit() and ano.isdigit() and semestre.isdigit() and faltas.isdigit():
+        if ra != '' and codigoDisciplina != '' and ano != '' and semestre != '' and faltas != '' and ra.isdigit() and ano.isdigit() and semestre.isdigit() and faltas.isdigit():
             request.ra = int(ra)
             request.codigoDisciplina = codigoDisciplina
             request.ano = int(ano)
@@ -82,28 +80,28 @@ def dadosRequisicao(opcao):
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
+        else:
+            print("Algum dos campos não foi preenchido corretamente")
 
     elif opcao == LISTAR_DISCIPLINAS_CURSO:
         request = gerenciamentoNotas_pb2.listarDisciplinasCursoRequest()
         codigoCurso = input("Digite o código do curso: ")
-        if codigoCurso == '':
-            print("Algum dos campos não foi preenchido corretamente")
-        elif codigoCurso.isdigit():
+        if codigoCurso.isdigit() and codigoCurso != "":
             request.codigoCurso = int(codigoCurso)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
             size = int(clientsocket.recv(4).decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
+        else:
+            print("Algum dos campos não foi preenchido corretamente")
 
     elif opcao == LISTAR_DISCIPLINAS_ALUNO:
         request = gerenciamentoNotas_pb2.listarDisciplinasAlunoRequest()
         ra = input("Digite o código do aluno: ")
         ano = input("Digite o ano: ")
         semestre = input("Digite o semestre: ")
-        if ra == '' or ano == '' or semestre == '':
-            print("Algum dos campos não foi preenchido corretamente")
-        elif ra.isdigit() and ano.isdigit() and semestre.isdigit():
+        if ra.isdigit() and ano.isdigit() and semestre.isdigit() and ra != '' and ano != '' and semestre != '':
             request.ra = int(ra)
             request.ano = int(ano)
             request.semestre = int(semestre)
@@ -112,6 +110,8 @@ def dadosRequisicao(opcao):
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
+        else:
+            print("Algum dos campos não foi preenchido corretamente")
 
     elif opcao == INSERIR_MATRICULA:
         request = gerenciamentoNotas_pb2.inserirMatriculaRequest()
@@ -119,9 +119,7 @@ def dadosRequisicao(opcao):
         codigoDisciplina = input("Digite o código da disciplina: ")
         ano = input("Digite o ano da disciplina: ")
         semestre = input("Digite o semestre da disciplina: ")
-        if ra == '' or codigoDisciplina == '' or ano == '' or semestre == '':
-            print("Algum dos campos não foi preenchido corretamente")
-        elif ra.isdigit() and ano.isdigit() and semestre.isdigit():
+        if ra.isdigit() and ano.isdigit() and semestre.isdigit() and codigoDisciplina != "" and ano != "" and semestre != "" and ra != "":
             request.matricula.ra = int(ra)
             request.matricula.codigoDisciplina = codigoDisciplina
             request.matricula.ano = int(ano)
@@ -131,6 +129,8 @@ def dadosRequisicao(opcao):
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
+        else:
+            print("Algum dos campos não foi preenchido corretamente")
     else:
         print("Opção inválida")
 
