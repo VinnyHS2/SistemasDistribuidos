@@ -7332,16 +7332,16 @@ public final class GerenciamentoNotas {
       int getRa();
 
       /**
-       * <code>string nome = 2;</code>
-       * @return The nome.
+       * <code>string codigoDisciplina = 2;</code>
+       * @return The codigoDisciplina.
        */
-      java.lang.String getNome();
+      java.lang.String getCodigoDisciplina();
       /**
-       * <code>string nome = 2;</code>
-       * @return The bytes for nome.
+       * <code>string codigoDisciplina = 2;</code>
+       * @return The bytes for codigoDisciplina.
        */
       com.google.protobuf.ByteString
-          getNomeBytes();
+          getCodigoDisciplinaBytes();
 
       /**
        * <code>float nota = 3;</code>
@@ -7368,7 +7368,7 @@ public final class GerenciamentoNotas {
         super(builder);
       }
       private DisciplinaAlunos() {
-        nome_ = "";
+        codigoDisciplina_ = "";
       }
 
       @java.lang.Override
@@ -7409,7 +7409,7 @@ public final class GerenciamentoNotas {
               case 18: {
                 java.lang.String s = input.readStringRequireUtf8();
 
-                nome_ = s;
+                codigoDisciplina_ = s;
                 break;
               }
               case 29: {
@@ -7465,38 +7465,38 @@ public final class GerenciamentoNotas {
         return ra_;
       }
 
-      public static final int NOME_FIELD_NUMBER = 2;
-      private volatile java.lang.Object nome_;
+      public static final int CODIGODISCIPLINA_FIELD_NUMBER = 2;
+      private volatile java.lang.Object codigoDisciplina_;
       /**
-       * <code>string nome = 2;</code>
-       * @return The nome.
+       * <code>string codigoDisciplina = 2;</code>
+       * @return The codigoDisciplina.
        */
       @java.lang.Override
-      public java.lang.String getNome() {
-        java.lang.Object ref = nome_;
+      public java.lang.String getCodigoDisciplina() {
+        java.lang.Object ref = codigoDisciplina_;
         if (ref instanceof java.lang.String) {
           return (java.lang.String) ref;
         } else {
           com.google.protobuf.ByteString bs = 
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          nome_ = s;
+          codigoDisciplina_ = s;
           return s;
         }
       }
       /**
-       * <code>string nome = 2;</code>
-       * @return The bytes for nome.
+       * <code>string codigoDisciplina = 2;</code>
+       * @return The bytes for codigoDisciplina.
        */
       @java.lang.Override
       public com.google.protobuf.ByteString
-          getNomeBytes() {
-        java.lang.Object ref = nome_;
+          getCodigoDisciplinaBytes() {
+        java.lang.Object ref = codigoDisciplina_;
         if (ref instanceof java.lang.String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          nome_ = b;
+          codigoDisciplina_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -7542,8 +7542,8 @@ public final class GerenciamentoNotas {
         if (ra_ != 0) {
           output.writeInt32(1, ra_);
         }
-        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nome_)) {
-          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nome_);
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(codigoDisciplina_)) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, codigoDisciplina_);
         }
         if (java.lang.Float.floatToRawIntBits(nota_) != 0) {
           output.writeFloat(3, nota_);
@@ -7564,8 +7564,8 @@ public final class GerenciamentoNotas {
           size += com.google.protobuf.CodedOutputStream
             .computeInt32Size(1, ra_);
         }
-        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nome_)) {
-          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nome_);
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(codigoDisciplina_)) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, codigoDisciplina_);
         }
         if (java.lang.Float.floatToRawIntBits(nota_) != 0) {
           size += com.google.protobuf.CodedOutputStream
@@ -7592,8 +7592,8 @@ public final class GerenciamentoNotas {
 
         if (getRa()
             != other.getRa()) return false;
-        if (!getNome()
-            .equals(other.getNome())) return false;
+        if (!getCodigoDisciplina()
+            .equals(other.getCodigoDisciplina())) return false;
         if (java.lang.Float.floatToIntBits(getNota())
             != java.lang.Float.floatToIntBits(
                 other.getNota())) return false;
@@ -7612,8 +7612,8 @@ public final class GerenciamentoNotas {
         hash = (19 * hash) + getDescriptor().hashCode();
         hash = (37 * hash) + RA_FIELD_NUMBER;
         hash = (53 * hash) + getRa();
-        hash = (37 * hash) + NOME_FIELD_NUMBER;
-        hash = (53 * hash) + getNome().hashCode();
+        hash = (37 * hash) + CODIGODISCIPLINA_FIELD_NUMBER;
+        hash = (53 * hash) + getCodigoDisciplina().hashCode();
         hash = (37 * hash) + NOTA_FIELD_NUMBER;
         hash = (53 * hash) + java.lang.Float.floatToIntBits(
             getNota());
@@ -7754,7 +7754,7 @@ public final class GerenciamentoNotas {
           super.clear();
           ra_ = 0;
 
-          nome_ = "";
+          codigoDisciplina_ = "";
 
           nota_ = 0F;
 
@@ -7787,7 +7787,7 @@ public final class GerenciamentoNotas {
         public GerenciamentoNotas.listarDisciplinasAlunoResponse.DisciplinaAlunos buildPartial() {
           GerenciamentoNotas.listarDisciplinasAlunoResponse.DisciplinaAlunos result = new GerenciamentoNotas.listarDisciplinasAlunoResponse.DisciplinaAlunos(this);
           result.ra_ = ra_;
-          result.nome_ = nome_;
+          result.codigoDisciplina_ = codigoDisciplina_;
           result.nota_ = nota_;
           result.faltas_ = faltas_;
           onBuilt();
@@ -7841,8 +7841,8 @@ public final class GerenciamentoNotas {
           if (other.getRa() != 0) {
             setRa(other.getRa());
           }
-          if (!other.getNome().isEmpty()) {
-            nome_ = other.nome_;
+          if (!other.getCodigoDisciplina().isEmpty()) {
+            codigoDisciplina_ = other.codigoDisciplina_;
             onChanged();
           }
           if (other.getNota() != 0F) {
@@ -7911,78 +7911,78 @@ public final class GerenciamentoNotas {
           return this;
         }
 
-        private java.lang.Object nome_ = "";
+        private java.lang.Object codigoDisciplina_ = "";
         /**
-         * <code>string nome = 2;</code>
-         * @return The nome.
+         * <code>string codigoDisciplina = 2;</code>
+         * @return The codigoDisciplina.
          */
-        public java.lang.String getNome() {
-          java.lang.Object ref = nome_;
+        public java.lang.String getCodigoDisciplina() {
+          java.lang.Object ref = codigoDisciplina_;
           if (!(ref instanceof java.lang.String)) {
             com.google.protobuf.ByteString bs =
                 (com.google.protobuf.ByteString) ref;
             java.lang.String s = bs.toStringUtf8();
-            nome_ = s;
+            codigoDisciplina_ = s;
             return s;
           } else {
             return (java.lang.String) ref;
           }
         }
         /**
-         * <code>string nome = 2;</code>
-         * @return The bytes for nome.
+         * <code>string codigoDisciplina = 2;</code>
+         * @return The bytes for codigoDisciplina.
          */
         public com.google.protobuf.ByteString
-            getNomeBytes() {
-          java.lang.Object ref = nome_;
+            getCodigoDisciplinaBytes() {
+          java.lang.Object ref = codigoDisciplina_;
           if (ref instanceof String) {
             com.google.protobuf.ByteString b = 
                 com.google.protobuf.ByteString.copyFromUtf8(
                     (java.lang.String) ref);
-            nome_ = b;
+            codigoDisciplina_ = b;
             return b;
           } else {
             return (com.google.protobuf.ByteString) ref;
           }
         }
         /**
-         * <code>string nome = 2;</code>
-         * @param value The nome to set.
+         * <code>string codigoDisciplina = 2;</code>
+         * @param value The codigoDisciplina to set.
          * @return This builder for chaining.
          */
-        public Builder setNome(
+        public Builder setCodigoDisciplina(
             java.lang.String value) {
           if (value == null) {
     throw new NullPointerException();
   }
   
-          nome_ = value;
+          codigoDisciplina_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>string nome = 2;</code>
+         * <code>string codigoDisciplina = 2;</code>
          * @return This builder for chaining.
          */
-        public Builder clearNome() {
+        public Builder clearCodigoDisciplina() {
           
-          nome_ = getDefaultInstance().getNome();
+          codigoDisciplina_ = getDefaultInstance().getCodigoDisciplina();
           onChanged();
           return this;
         }
         /**
-         * <code>string nome = 2;</code>
-         * @param value The bytes for nome to set.
+         * <code>string codigoDisciplina = 2;</code>
+         * @param value The bytes for codigoDisciplina to set.
          * @return This builder for chaining.
          */
-        public Builder setNomeBytes(
+        public Builder setCodigoDisciplinaBytes(
             com.google.protobuf.ByteString value) {
           if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
           
-          nome_ = value;
+          codigoDisciplina_ = value;
           onChanged();
           return this;
         }
@@ -13695,25 +13695,26 @@ public final class GerenciamentoNotas {
       "ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\016\n\006faltas\030\005 " +
       "\001(\005\022\020\n\010mensagem\030\006 \001(\t\"J\n\035listarDisciplin" +
       "asAlunoRequest\022\n\n\002ra\030\001 \001(\005\022\013\n\003ano\030\002 \001(\005\022" +
-      "\020\n\010semestre\030\003 \001(\005\"\305\001\n\036listarDisciplinasA" +
+      "\020\n\010semestre\030\003 \001(\005\"\321\001\n\036listarDisciplinasA" +
       "lunoResponse\022E\n\013disciplinas\030\001 \003(\01320.list" +
       "arDisciplinasAlunoResponse.DisciplinaAlu" +
-      "nos\022\020\n\010mensagem\030\002 \001(\t\032J\n\020DisciplinaAluno" +
-      "s\022\n\n\002ra\030\001 \001(\005\022\014\n\004nome\030\002 \001(\t\022\014\n\004nota\030\003 \001(" +
-      "\002\022\016\n\006faltas\030\004 \001(\005\"8\n\027inserirMatriculaReq" +
-      "uest\022\035\n\tmatricula\030\001 \001(\0132\n.Matricula\"\214\001\n\t" +
-      "Matricula\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplin" +
-      "a\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010semestre\030\004 \001(\005\022\021" +
-      "\n\004nota\030\005 \001(\002H\000\210\001\001\022\023\n\006faltas\030\006 \001(\005H\001\210\001\001B\007" +
-      "\n\005_notaB\t\n\007_faltas\"K\n\030inserirMatriculaRe" +
-      "sponse\022\035\n\tmatricula\030\001 \001(\0132\n.Matricula\022\020\n" +
-      "\010mensagem\030\002 \001(\t\"4\n\035listarDisciplinasCurs" +
-      "oRequest\022\023\n\013codigoCurso\030\001 \001(\005\"\306\001\n\036listar" +
-      "DisciplinasCursoResponse\022D\n\013disciplinas\030" +
-      "\001 \003(\0132/.listarDisciplinasCursoResponse.D" +
-      "isciplinaCurso\022\020\n\010mensagem\030\002 \001(\t\032L\n\017Disc" +
-      "iplinaCurso\022\030\n\020codigoDisciplina\030\001 \001(\t\022\014\n" +
-      "\004nome\030\002 \001(\t\022\021\n\tprofessor\030\003 \001(\tb\006proto3"
+      "nos\022\020\n\010mensagem\030\002 \001(\t\032V\n\020DisciplinaAluno" +
+      "s\022\n\n\002ra\030\001 \001(\005\022\030\n\020codigoDisciplina\030\002 \001(\t\022" +
+      "\014\n\004nota\030\003 \001(\002\022\016\n\006faltas\030\004 \001(\005\"8\n\027inserir" +
+      "MatriculaRequest\022\035\n\tmatricula\030\001 \001(\0132\n.Ma" +
+      "tricula\"\214\001\n\tMatricula\022\n\n\002ra\030\001 \001(\005\022\030\n\020cod" +
+      "igoDisciplina\030\002 \001(\t\022\013\n\003ano\030\003 \001(\005\022\020\n\010seme" +
+      "stre\030\004 \001(\005\022\021\n\004nota\030\005 \001(\002H\000\210\001\001\022\023\n\006faltas\030" +
+      "\006 \001(\005H\001\210\001\001B\007\n\005_notaB\t\n\007_faltas\"K\n\030inseri" +
+      "rMatriculaResponse\022\035\n\tmatricula\030\001 \001(\0132\n." +
+      "Matricula\022\020\n\010mensagem\030\002 \001(\t\"4\n\035listarDis" +
+      "ciplinasCursoRequest\022\023\n\013codigoCurso\030\001 \001(" +
+      "\005\"\306\001\n\036listarDisciplinasCursoResponse\022D\n\013" +
+      "disciplinas\030\001 \003(\0132/.listarDisciplinasCur" +
+      "soResponse.DisciplinaCurso\022\020\n\010mensagem\030\002" +
+      " \001(\t\032L\n\017DisciplinaCurso\022\030\n\020codigoDiscipl" +
+      "ina\030\001 \001(\t\022\014\n\004nome\030\002 \001(\t\022\021\n\tprofessor\030\003 \001" +
+      "(\tb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -13784,7 +13785,7 @@ public final class GerenciamentoNotas {
     internal_static_listarDisciplinasAlunoResponse_DisciplinaAlunos_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_listarDisciplinasAlunoResponse_DisciplinaAlunos_descriptor,
-        new java.lang.String[] { "Ra", "Nome", "Nota", "Faltas", });
+        new java.lang.String[] { "Ra", "CodigoDisciplina", "Nota", "Faltas", });
     internal_static_inserirMatriculaRequest_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_inserirMatriculaRequest_fieldAccessorTable = new

@@ -64,7 +64,7 @@ message listarDisciplinasAlunoRequest {
 message listarDisciplinasAlunoResponse {
     message DisciplinaAlunos{
         int32 ra = 1;
-        string nome = 2;
+        string codigoDisciplina = 2;
         float nota = 3;
         int32 faltas = 4;  
     }

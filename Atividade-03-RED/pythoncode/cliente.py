@@ -34,7 +34,8 @@ def dadosRequisicao(opcao):
             request.ano = int(ano)
             request.semestre = int(semestre)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = int(clientsocket.recv(4).decode())
+            size = clientsocket.recv(1024)
+            size = int(size.decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
@@ -55,7 +56,9 @@ def dadosRequisicao(opcao):
             request.semestre = int(semestre)
             request.nota = float(nota)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = int(clientsocket.recv(4).decode())
+            size = clientsocket.recv(1024)
+            print(size)
+            size = int(size.decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
@@ -76,7 +79,9 @@ def dadosRequisicao(opcao):
             request.semestre = int(semestre)
             request.faltas = int(faltas)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = int(clientsocket.recv(4).decode())
+            size = clientsocket.recv(4)
+            print(size)
+            size = int(size.decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
@@ -89,7 +94,8 @@ def dadosRequisicao(opcao):
         if codigoCurso.isdigit() and codigoCurso != "":
             request.codigoCurso = int(codigoCurso)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = int(clientsocket.recv(4).decode())
+            size = clientsocket.recv(1024)
+            size = int(size.decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
@@ -106,7 +112,8 @@ def dadosRequisicao(opcao):
             request.ano = int(ano)
             request.semestre = int(semestre)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = int(clientsocket.recv(3).decode())
+            size = clientsocket.recv(1024)
+            size = int(size.decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
@@ -125,7 +132,8 @@ def dadosRequisicao(opcao):
             request.matricula.ano = int(ano)
             request.matricula.semestre = int(semestre)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = int(clientsocket.recv(4).decode())
+            size = clientsocket.recv(1024)
+            size = int(size.decode())
             response = clientsocket.recv(size).decode()
             print('\n=========================\n',
                   response, '\n=========================\n')
