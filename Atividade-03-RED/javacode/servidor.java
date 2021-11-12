@@ -1,8 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
-import java.util.Map;
-import java.nio.*;
 import java.sql.*;
 
 public class servidor {
@@ -188,7 +185,7 @@ public class servidor {
             statement.execute("INSERT INTO matricula (ra, cod_disciplina, ano, semestre, nota, faltas) VALUES (" + ra + ", '" + String.valueOf(codigoDisciplina) + "', " + ano + ", " + semestre + ", 0, 0);");
             rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Não foi possível realizar a matricula");
+                response.setMensagem("Não foi possível realizar a matrícula");
                 return response.build();
             }
             while(rs.next()){
@@ -213,88 +210,137 @@ public class servidor {
         try {
             int serverPort = 7000;
             ServerSocket listenSocket = new ServerSocket(serverPort);
+            // Váriveis para o recebimento de mensagens
             String valueStr;
             int sizeBuffer;
             byte[] buffer;
 
-            // enviar msg
+            // Váriaveis para o envio de mensagens
             byte[] msg;
             String responseSize;
             byte[] size;
+            // aceita conexão com o socket nas portas definidas anteriormente
             Socket clientSocket = listenSocket.accept();
-            // BufferedReader dataaa = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            // cria uma coneção com o client para receber mensagens do cliente 
             DataInputStream inClient = new DataInputStream(clientSocket.getInputStream());
+            // cria uma coneção com o client para enviar mensagens para o cliente 
             DataOutputStream outClient = new DataOutputStream(clientSocket.getOutputStream());
             while (true) {
+                // recebe o tamanho do buffer
                 valueStr = inClient.readLine();
+                // converte o tamanho do buffer para inteiro
                 sizeBuffer = Integer.valueOf(valueStr);
+                // cria o buffer com o tamanho da mensagem
                 buffer = new byte[sizeBuffer];
+                // faz a leitura do buffer
                 inClient.read(buffer);
 
-                    // realiza o unmarshalling
+                // realiza o unmarshalling
                 GerenciamentoNotas.requestType type = GerenciamentoNotas.requestType.parseFrom(buffer);
 
+                // recebe o tamanho do buffer
                 valueStr = inClient.readLine();
+                // converte o tamanho do buffer para inteiro
                 sizeBuffer = Integer.valueOf(valueStr);
+                // cria o buffer com o tamanho da mensagem
                 buffer = new byte[sizeBuffer];
+                // faz a leitura do buffer
                 inClient.read(buffer);
 
                 switch (type.getType()) {
                     case LISTAR_ALUNOS:
+                        // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.listarAlunosRequest request = GerenciamentoNotas.listarAlunosRequest.parseFrom(buffer);
+                        // chama a função para listar os alunos
                         GerenciamentoNotas.listarAlunosResponse response = listarAlunos(conn, request.getCodigoDisciplina() , request.getAno(), request.getSemestre());
+                        // converte o resultado da função para bytes
                         msg = response.toByteArray();
+                        // obtem o tamanho do resultado e converte para string
                         responseSize = String.valueOf(msg.length) + "\n";
+                        // envia o tamanho do resultado em bytes
                         outClient.write(responseSize.getBytes());
+                        // envia o resultado em bytes
                         outClient.write(msg);
                         break;
                     case ALTERAR_NOTA:
+                        // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.alterarNotaRequest alterarNotaRequest = GerenciamentoNotas.alterarNotaRequest.parseFrom(buffer);
+                        // chama a função que altera a nota de um aluno
                         GerenciamentoNotas.alterarNotaResponse alterarNotaResponse = alterarNota(conn, alterarNotaRequest.getRa(), alterarNotaRequest.getCodigoDisciplina(), alterarNotaRequest.getAno(), alterarNotaRequest.getSemestre(), alterarNotaRequest.getNota());
+                        // converte o resultado da função para bytes
                         msg = alterarNotaResponse.toByteArray();
+                        // obtem o tamanho do resultado e converte para string
                         responseSize = String.valueOf(msg.length) + "\n";
+                        // envia o tamanho do resultado em bytes
                         outClient.write(responseSize.getBytes());
+                        // envia o resultado em bytes
                         outClient.write(msg);
                         break;
                     case ALTERAR_FALTAS:
+                        // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.alterarFaltasRequest alterarFaltasRequest = GerenciamentoNotas.alterarFaltasRequest.parseFrom(buffer);
+                        // chama a função que altera as faltas de um aluno
                         GerenciamentoNotas.alterarFaltasResponse alterarFaltasResponse = alterarFaltas(conn, alterarFaltasRequest.getRa(), alterarFaltasRequest.getCodigoDisciplina(), alterarFaltasRequest.getAno(), alterarFaltasRequest.getSemestre(), alterarFaltasRequest.getFaltas());
+                        // converte o resultado da função para bytes
                         msg = alterarFaltasResponse.toByteArray();
+                        // obtem o tamanho do resultado e converte para string
                         responseSize = String.valueOf(msg.length) + "\n";
+                        // envia o tamanho do resultado em bytes
                         outClient.write(responseSize.getBytes());
+                        // envia o resultado em bytes
                         outClient.write(msg);
                         break;
                     case LISTAR_DISCIPLINAS_CURSO:
+                        // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.listarDisciplinasCursoRequest listarDisciplinasCursoRequest = GerenciamentoNotas.listarDisciplinasCursoRequest.parseFrom(buffer);
+                        // chama a função que faz a listagem de disciplinas do curso
                         GerenciamentoNotas.listarDisciplinasCursoResponse listarDisciplinasCursoResponse = listarDisciplinasCurso(conn, listarDisciplinasCursoRequest.getCodigoCurso());
+                        // converte o resultado da função para bytes
                         msg = listarDisciplinasCursoResponse.toByteArray();
+                        // obtem o tamanho do resultado e converte para string
                         responseSize = String.valueOf(msg.length) + "\n";
+                        // envia o tamanho do resultado em bytes
                         outClient.write(responseSize.getBytes());
+                        // envia o resultado em bytes
                         outClient.write(msg);
                         break;
                     case LISTAR_DISCIPLINAS_ALUNO:
+                        // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.listarDisciplinasAlunoRequest listarDisciplinasAlunoRequest = GerenciamentoNotas.listarDisciplinasAlunoRequest.parseFrom(buffer);
+                        // chama a função que faz a listagem de disciplinas do aluno
                         GerenciamentoNotas.listarDisciplinasAlunoResponse listarDisciplinasAlunoResponse = listarDisciplinasAluno(conn, listarDisciplinasAlunoRequest.getRa(), listarDisciplinasAlunoRequest.getAno(), listarDisciplinasAlunoRequest.getSemestre());
+                        // converte o resultado da função para bytes
                         msg = listarDisciplinasAlunoResponse.toByteArray();
+                        // obtem o tamanho do array de bytes e converte para string
                         responseSize = String.valueOf(msg.length) + "\n";
+                        // envia o tamanho da resposta em bytes
                         outClient.write(responseSize.getBytes());
+                        // envia a resposta em bytes
                         outClient.write(msg);
                         break;
                     case INSERIR_MATRICULA:
+                        // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.inserirMatriculaRequest inserirMatriculaRequest = GerenciamentoNotas.inserirMatriculaRequest.parseFrom(buffer);
+                        // chama a função de inserir matrícula
                         GerenciamentoNotas.inserirMatriculaResponse inserirMatriculaResponse = inserirMatricula(conn, inserirMatriculaRequest.getMatricula().getRa(), inserirMatriculaRequest.getMatricula().getCodigoDisciplina(), inserirMatriculaRequest.getMatricula().getAno(), inserirMatriculaRequest.getMatricula().getSemestre());
-                        msg = inserirMatriculaResponse.toByteArray();   
+                        // converte o resultado da função para bytes
+                        msg = inserirMatriculaResponse.toByteArray();
+                        // obtem o tamanho do array de bytes e converte para string
                         responseSize = String.valueOf(msg.length) + "\n";
+                        // envia o tamanho da resposta em bytes
                         outClient.write(responseSize.getBytes());
+                        // envia a resposta em bytes
                         outClient.write(msg);
                         break;
                     default:
+                        // Tipo de requisição não encontrado
                         System.out.println("Nenhum tipo de requisição");
                         break;
                 }
                 // System.out.println("−−\n" + type + "−−\n");
             } // while
         } catch (IOException e) {
+            // Mostra o erro
             System.out.println("Listensocket:" + e.getMessage());
         } // catch
     }// main
