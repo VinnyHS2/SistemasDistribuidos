@@ -34,11 +34,18 @@ def dadosRequisicao(opcao):
             request.ano = int(ano)
             request.semestre = int(semestre)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = clientsocket.recv(1024)
-            size = int(size.decode())
-            response = clientsocket.recv(size).decode()
-            print('\n=========================\n',
-                  response, '\n=========================\n')
+            size = ''
+            while True:
+                size += clientsocket.recv(1).decode()
+                if size.endswith('\n'):
+                    break
+            size = int(size)
+            response = clientsocket.recv(size)
+            responseParsed = gerenciamentoNotas_pb2.listarAlunosResponse()
+            responseParsed.ParseFromString(response)
+            for aluno in responseParsed.alunos:
+                print(aluno, end="")
+                print("===========================")
         else:
             print("Algum dos campos não foi preenchido corretamente")
 
@@ -56,12 +63,19 @@ def dadosRequisicao(opcao):
             request.semestre = int(semestre)
             request.nota = float(nota)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = clientsocket.recv(1024)
-            print(size)
-            size = int(size.decode())
-            response = clientsocket.recv(size).decode()
-            print('\n=========================\n',
-                  response, '\n=========================\n')
+            size = ''
+            while True:
+                size += clientsocket.recv(1).decode()
+                if size.endswith('\n'):
+                    break
+            size = int(size)
+            response = clientsocket.recv(size)
+            responseParsed = gerenciamentoNotas_pb2.alterarNotaResponse()
+            responseParsed.ParseFromString(response)
+            if responseParsed.mensagem != "":
+                print(responseParsed.mensagem)
+            else:
+                print("Ra: " + str(responseParsed.ra) + "\nCodigo da Disciplina:" + str(responseParsed.codigoDisciplina) + "\nAno: " + str(responseParsed.ano) + "\nSemestre: " + str(responseParsed.semestre) + "\nNota: " + str(responseParsed.nota))
         else:
             print("Algum dos campos não foi preenchido corretamente")
 
@@ -79,12 +93,19 @@ def dadosRequisicao(opcao):
             request.semestre = int(semestre)
             request.faltas = int(faltas)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = clientsocket.recv(4)
-            print(size)
-            size = int(size.decode())
-            response = clientsocket.recv(size).decode()
-            print('\n=========================\n',
-                  response, '\n=========================\n')
+            size = ''
+            while True:
+                size += clientsocket.recv(1).decode()
+                if size.endswith('\n'):
+                    break
+            size = int(size)
+            response = clientsocket.recv(size)
+            responseParsed = gerenciamentoNotas_pb2.alterarFaltasResponse()
+            responseParsed.ParseFromString(response)
+            if responseParsed.mensagem != "":
+                print(responseParsed.mensagem)
+            else:
+                print("Ra: " + str(responseParsed.ra) + "\nCodigo da Disciplina:" + str(responseParsed.codigoDisciplina) + "\nAno: " + str(responseParsed.ano) + "\nSemestre: " + str(responseParsed.semestre) + "\nFaltas: " + str(responseParsed.faltas))
         else:
             print("Algum dos campos não foi preenchido corretamente")
 
@@ -94,11 +115,21 @@ def dadosRequisicao(opcao):
         if codigoCurso.isdigit() and codigoCurso != "":
             request.codigoCurso = int(codigoCurso)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = clientsocket.recv(1024)
-            size = int(size.decode())
-            response = clientsocket.recv(size).decode()
-            print('\n=========================\n',
-                  response, '\n=========================\n')
+            size = ''
+            while True:
+                size += clientsocket.recv(1).decode()
+                if size.endswith('\n'):
+                    break
+            size = int(size)
+            response = clientsocket.recv(size)  
+            responseParsed = gerenciamentoNotas_pb2.listarDisciplinasCursoResponse()
+            responseParsed.ParseFromString(response)
+            if responseParsed.mensagem != "":
+                print(responseParsed.mensagem)
+            else:
+                for i in range(len(responseParsed.disciplinas)):
+                    print("Código da Disciplina: " + str(responseParsed.disciplinas[i].codigoDisciplina) + "\nNome: " + str(responseParsed.disciplinas[i].nome) + "\nProfessor: " + str(responseParsed.disciplinas[i].professor))
+                    print("===========================")
         else:
             print("Algum dos campos não foi preenchido corretamente")
 
@@ -112,11 +143,21 @@ def dadosRequisicao(opcao):
             request.ano = int(ano)
             request.semestre = int(semestre)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = clientsocket.recv(1024)
-            size = int(size.decode())
-            response = clientsocket.recv(size).decode()
-            print('\n=========================\n',
-                  response, '\n=========================\n')
+            size = ''
+            while True:
+                size += clientsocket.recv(1).decode()
+                if size.endswith('\n'):
+                    break
+            size = int(size)
+            response = clientsocket.recv(size)
+            responseParsed = gerenciamentoNotas_pb2.listarDisciplinasAlunoResponse()
+            responseParsed.ParseFromString(response)
+            if responseParsed.mensagem != "":
+                print(responseParsed.mensagem)
+            else:
+                for i in range(len(responseParsed.disciplinas)):
+                        print("Ra: " + str(responseParsed.disciplinas[i].ra) + "\nCódigo da Disciplina: " + str(responseParsed.disciplinas[i].codigoDisciplina) + "\nNota: " + str(responseParsed.disciplinas[i].nota) + "\nFaltas: " + str(responseParsed.disciplinas[i].faltas))
+                        print("===========================")
         else:
             print("Algum dos campos não foi preenchido corretamente")
 
@@ -132,11 +173,19 @@ def dadosRequisicao(opcao):
             request.matricula.ano = int(ano)
             request.matricula.semestre = int(semestre)
             enviaRequest(opcao, request.SerializeToString(), len(request.SerializeToString()))
-            size = clientsocket.recv(1024)
-            size = int(size.decode())
-            response = clientsocket.recv(size).decode()
-            print('\n=========================\n',
-                  response, '\n=========================\n')
+            size = ''
+            while True:
+                size += clientsocket.recv(1).decode()
+                if size.endswith('\n'):
+                    break
+            size = int(size)
+            response = clientsocket.recv(size)
+            responseParsed = gerenciamentoNotas_pb2.inserirMatriculaResponse()
+            responseParsed.ParseFromString(response)
+            if responseParsed.mensagem:
+                print(responseParsed.mensagem)
+            else:
+                print("Ra: " + str(responseParsed.ra) + "\nCodigo da Disciplina:" + str(responseParsed.codigoDisciplina) + "\nAno: " + str(responseParsed.ano) + "\nSemestre: " + str(responseParsed.semestre))
         else:
             print("Algum dos campos não foi preenchido corretamente")
     else:

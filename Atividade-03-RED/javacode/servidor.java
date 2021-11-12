@@ -40,7 +40,7 @@ public class servidor {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT a.* FROM matricula m INNER JOIN aluno a ON (a.ra = m.ra) WHERE '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Nao ha alunos matriculados nessa disciplina");
+                response.setMensagem("Não há alunos matriculados nessa disciplina");
                 return response.build();
             }
             while(rs.next()){
@@ -68,7 +68,7 @@ public class servidor {
             statement.execute("UPDATE matricula SET nota = " + nota + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Nao ha alunos matriculados nessa disciplina");
+                response.setMensagem("Não há alunos matriculados nessa disciplina");
                 return response.build();
             }
             response.setRa(rs.getInt("ra"));
@@ -94,7 +94,7 @@ public class servidor {
             statement.execute("UPDATE matricula SET faltas = " + faltas + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("O aluno nao foi encontrado na disciplina informada");
+                response.setMensagem("O aluno não foi encontrado na disciplina informada");
                 return response.build();
             }
             response.setRa(rs.getInt("ra"));
@@ -116,7 +116,7 @@ public class servidor {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE " + String.valueOf(codigoCurso) + " = cod_curso;" /*+ ano + " = ano AND " + semestre + " = semestre;"*/);
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Nao foi encontrada nenhuma disciplina para o curso informado");
+                response.setMensagem("Não foi encontrada nenhuma disciplina para o curso informado");
                 return response.build();
             }
             while(rs.next()){
@@ -141,7 +141,7 @@ public class servidor {
             /*Listagem de disciplinas, faltas e notas (RA, nome, nota, faltas) de um aluno informado o ano e semestre.*/ 
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND " + ano + " = ano AND " + semestre + " = semestre;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("O aluno informado nao esta cadastrado em nenhuma disciplina no ano e semetre informados");
+                response.setMensagem("O aluno informado não está cadastrado em nenhuma disciplina no ano e semetre informados");
                 return response.build();
             }
             while(rs.next()){
@@ -166,10 +166,29 @@ public class servidor {
             // TODO: verificar se a disciplina existe
             // TODO: verificar se o aluno existe
             Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO matricula (ra, cod_disciplina, ano, semestre, nota, faltas) VALUES (" + ra + ", '" + String.valueOf(codigoDisciplina) + "', " + ano + ", " + semestre + ", 0, 0);");
-            ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE '" + String.valueOf(codigoDisciplina) + "' = codigo;");
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Nao foi possivel realizar a matricula");
+                response.setMensagem("A disciplina informada não existe");
+                return response.build();
+            }
+
+            rs = statement.executeQuery("SELECT * FROM aluno WHERE " + ra + " = ra;");
+            if(!rs.isBeforeFirst()){
+                response.setMensagem("O aluno informado não existe");
+                return response.build();
+            }
+
+            
+            rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            if(rs.isBeforeFirst()){
+                response.setMensagem("O aluno já está matriculado nessa disciplina");
+                return response.build();
+            }
+
+            statement.execute("INSERT INTO matricula (ra, cod_disciplina, ano, semestre, nota, faltas) VALUES (" + ra + ", '" + String.valueOf(codigoDisciplina) + "', " + ano + ", " + semestre + ", 0, 0);");
+            rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            if(!rs.isBeforeFirst()){
+                response.setMensagem("Não foi possível realizar a matricula");
                 return response.build();
             }
             while(rs.next()){
@@ -210,7 +229,6 @@ public class servidor {
                 valueStr = inClient.readLine();
                 sizeBuffer = Integer.valueOf(valueStr);
                 buffer = new byte[sizeBuffer];
-                long pid = ProcessHandle.current().pid();
                 inClient.read(buffer);
 
                     // realiza o unmarshalling
@@ -225,59 +243,53 @@ public class servidor {
                     case LISTAR_ALUNOS:
                         GerenciamentoNotas.listarAlunosRequest request = GerenciamentoNotas.listarAlunosRequest.parseFrom(buffer);
                         GerenciamentoNotas.listarAlunosResponse response = listarAlunos(conn, request.getCodigoDisciplina() , request.getAno(), request.getSemestre());
-                        msg = response.toString().getBytes();
-                        responseSize = String.valueOf(msg.length);
+                        msg = response.toByteArray();
+                        responseSize = String.valueOf(msg.length) + "\n";
                         outClient.write(responseSize.getBytes());
-                        outClient.flush();
                         outClient.write(msg);
                         break;
                     case ALTERAR_NOTA:
                         GerenciamentoNotas.alterarNotaRequest alterarNotaRequest = GerenciamentoNotas.alterarNotaRequest.parseFrom(buffer);
                         GerenciamentoNotas.alterarNotaResponse alterarNotaResponse = alterarNota(conn, alterarNotaRequest.getRa(), alterarNotaRequest.getCodigoDisciplina(), alterarNotaRequest.getAno(), alterarNotaRequest.getSemestre(), alterarNotaRequest.getNota());
-                        msg = alterarNotaResponse.toString().getBytes();
-                        responseSize = String.valueOf(msg.length);
+                        msg = alterarNotaResponse.toByteArray();
+                        responseSize = String.valueOf(msg.length) + "\n";
                         outClient.write(responseSize.getBytes());
-                        outClient.flush();
                         outClient.write(msg);
                         break;
                     case ALTERAR_FALTAS:
                         GerenciamentoNotas.alterarFaltasRequest alterarFaltasRequest = GerenciamentoNotas.alterarFaltasRequest.parseFrom(buffer);
                         GerenciamentoNotas.alterarFaltasResponse alterarFaltasResponse = alterarFaltas(conn, alterarFaltasRequest.getRa(), alterarFaltasRequest.getCodigoDisciplina(), alterarFaltasRequest.getAno(), alterarFaltasRequest.getSemestre(), alterarFaltasRequest.getFaltas());
-                        msg = alterarFaltasResponse.toString().getBytes();
-                        responseSize = String.valueOf(msg.length);
+                        msg = alterarFaltasResponse.toByteArray();
+                        responseSize = String.valueOf(msg.length) + "\n";
                         outClient.write(responseSize.getBytes());
-                        outClient.flush();
                         outClient.write(msg);
                         break;
                     case LISTAR_DISCIPLINAS_CURSO:
                         GerenciamentoNotas.listarDisciplinasCursoRequest listarDisciplinasCursoRequest = GerenciamentoNotas.listarDisciplinasCursoRequest.parseFrom(buffer);
                         GerenciamentoNotas.listarDisciplinasCursoResponse listarDisciplinasCursoResponse = listarDisciplinasCurso(conn, listarDisciplinasCursoRequest.getCodigoCurso());
-                        msg = listarDisciplinasCursoResponse.toString().getBytes();
-                        responseSize = String.valueOf(msg.length);
+                        msg = listarDisciplinasCursoResponse.toByteArray();
+                        responseSize = String.valueOf(msg.length) + "\n";
                         outClient.write(responseSize.getBytes());
-                        outClient.flush();
                         outClient.write(msg);
                         break;
                     case LISTAR_DISCIPLINAS_ALUNO:
                         GerenciamentoNotas.listarDisciplinasAlunoRequest listarDisciplinasAlunoRequest = GerenciamentoNotas.listarDisciplinasAlunoRequest.parseFrom(buffer);
                         GerenciamentoNotas.listarDisciplinasAlunoResponse listarDisciplinasAlunoResponse = listarDisciplinasAluno(conn, listarDisciplinasAlunoRequest.getRa(), listarDisciplinasAlunoRequest.getAno(), listarDisciplinasAlunoRequest.getSemestre());
-                        msg = listarDisciplinasAlunoResponse.toString().getBytes();
-                        responseSize = String.valueOf(msg.length);
+                        msg = listarDisciplinasAlunoResponse.toByteArray();
+                        responseSize = String.valueOf(msg.length) + "\n";
                         outClient.write(responseSize.getBytes());
-                        outClient.flush();
                         outClient.write(msg);
                         break;
                     case INSERIR_MATRICULA:
                         GerenciamentoNotas.inserirMatriculaRequest inserirMatriculaRequest = GerenciamentoNotas.inserirMatriculaRequest.parseFrom(buffer);
                         GerenciamentoNotas.inserirMatriculaResponse inserirMatriculaResponse = inserirMatricula(conn, inserirMatriculaRequest.getMatricula().getRa(), inserirMatriculaRequest.getMatricula().getCodigoDisciplina(), inserirMatriculaRequest.getMatricula().getAno(), inserirMatriculaRequest.getMatricula().getSemestre());
-                        msg = inserirMatriculaResponse.toString().getBytes();   
-                        responseSize = String.valueOf(msg.length);
+                        msg = inserirMatriculaResponse.toByteArray();   
+                        responseSize = String.valueOf(msg.length) + "\n";
                         outClient.write(responseSize.getBytes());
-                        outClient.flush();
                         outClient.write(msg);
                         break;
                     default:
-                        System.out.println("Nenhum tipo de requisicao");
+                        System.out.println("Nenhum tipo de requisição");
                         break;
                 }
                 // System.out.println("−−\n" + type + "−−\n");
