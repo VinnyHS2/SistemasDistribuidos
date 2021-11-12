@@ -1,4 +1,4 @@
-'''
+/*
     # Representação Externa de Dados Servidor #
     # Autores: Henrique Moura Bini e Vinicius Henrique Soares
     # Data de criação: 03/10/2021
@@ -11,7 +11,7 @@
             - LISTAR_DISCIPLINAS_ALUNO: Tenta listar os alunos de uma disciplina com base no ra, ano e semestre.
             - INSERIR_MATRICULA: Tenta inserir uma nova matrícula de um aluno em uma disciplina.
 
-'''
+*/
 import java.io.*;
 import java.net.*;
 import java.sql.*;
@@ -122,7 +122,7 @@ public class servidor {
             // atualiza as faltas
             statement.execute("UPDATE matricula SET faltas = " + faltas + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
             // busca novamente a nota para retornar o aluno com as faltas atualizadas
-            ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             // cria o objeto response
             response.setRa(rs.getInt("ra"));
             response.setAno(rs.getInt("ano"));
@@ -359,9 +359,6 @@ public class servidor {
                         // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.listarDisciplinasCursoRequest listarDisciplinasCursoRequest = GerenciamentoNotas.listarDisciplinasCursoRequest.parseFrom(buffer);
                         // chama a função que faz a listagem de disciplinas do curso
-                        if(listarDisciplinasCursoRequest.hasCodigoCurso()){
-                            System.out.println(foda);
-                        }
                         GerenciamentoNotas.listarDisciplinasCursoResponse listarDisciplinasCursoResponse = listarDisciplinasCurso(conn, listarDisciplinasCursoRequest.getCodigoCurso());
                         // converte o resultado da função para bytes
                         msg = listarDisciplinasCursoResponse.toByteArray();

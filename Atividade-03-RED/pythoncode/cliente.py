@@ -268,7 +268,7 @@ def dadosRequisicao(opcao):
             if responseParsed.mensagem:
                 print(responseParsed.mensagem)
             else:
-                print("Ra: " + str(responseParsed.ra) + "\nCodigo da Disciplina:" + str(responseParsed.codigoDisciplina) + "\nAno: " + str(responseParsed.ano) + "\nSemestre: " + str(responseParsed.semestre))
+                print("Ra: " + str(responseParsed.matricula.ra) + "\nCodigo da Disciplina:" + str(responseParsed.matricula.codigoDisciplina) + "\nAno: " + str(responseParsed.matricula.ano) + "\nSemestre: " + str(responseParsed.matricula.semestre))
         else:
             print("Algum dos campos não foi preenchido corretamente")
     else:
