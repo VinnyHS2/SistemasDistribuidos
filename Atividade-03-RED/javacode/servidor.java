@@ -1,3 +1,17 @@
+'''
+    # Representação Externa de Dados Servidor #
+    # Autores: Henrique Moura Bini e Vinicius Henrique Soares
+    # Data de criação: 03/10/2021
+    # Data de modificação: 12/11/2021
+    # Descrição: Implementação de um serviço de gerenciamento de notas que deve receber informações via TCP:
+            - LISTAR_ALUNOS: Tenta listar os alunos de uma disciplina com base no código da disciplina, ano e semestre.
+            - ALTERAR_NOTA: Tenta alterar a nota de um aluno em uma disciplina com base no código do aluno, código da disciplina, ano e semestre.
+            - ALTERAR_FALTAS: Tenta alterar a quantidade de faltas de um aluno com base no código do aluno, código da disciplina, ano e semestre.
+            - LISTAR_DISCIPLINAS_CURSO: Tenta listar as disciplinas de um curso com base no código do curso.
+            - LISTAR_DISCIPLINAS_ALUNO: Tenta listar os alunos de uma disciplina com base no ra, ano e semestre.
+            - INSERIR_MATRICULA: Tenta inserir uma nova matrícula de um aluno em uma disciplina.
+
+'''
 import java.io.*;
 import java.net.*;
 import java.sql.*;
@@ -30,16 +44,20 @@ public class servidor {
         return conn;
     }
 
+    // LISTA ALUNOS DE UMA DISCIPLINA
     public static GerenciamentoNotas.listarAlunosResponse listarAlunos(Connection connection, String codigoDisciplina, int ano, int semestre) {        
         GerenciamentoNotas.listarAlunosResponse.Builder response = GerenciamentoNotas.listarAlunosResponse.newBuilder();
         try{
-            // TODO: verificar se a disciplina existe
+            // cria um statement para realizar a consulta
             Statement statement = connection.createStatement();
+            // busca todos os alunos matriculados na disciplina
             ResultSet rs = statement.executeQuery("SELECT a.* FROM matricula m INNER JOIN aluno a ON (a.ra = m.ra) WHERE '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // caso não encontre nenhum aluno
             if(!rs.isBeforeFirst()){
                 response.setMensagem("Não há alunos matriculados nessa disciplina");
                 return response.build();
             }
+            // cria um objeto para a resposta
             while(rs.next()){
                 int ra = rs.getInt("ra");
                 String nome = rs.getString("nome");
@@ -48,74 +66,92 @@ public class servidor {
             }
 
         }
+        // caso ocorra um erro
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        // response.setAluno("a");
         return response.build();
     }
 
+    // ALTERA A NOTA DO ALUNO
     public static GerenciamentoNotas.alterarNotaResponse alterarNota(Connection connection, int ra, String codigoDisciplina, int ano, int semestre , float nota) {        
         GerenciamentoNotas.alterarNotaResponse.Builder response = GerenciamentoNotas.alterarNotaResponse.newBuilder();
+        // tneta executar
         try{
-            // TODO verificar se o aluno está matriculado na disciplina
-            // TODO verificar se a disciplina existe
-            // TODO verificar se a nota é válida
+            // cria um statement para realizar a consulta
             Statement statement = connection.createStatement();
-            statement.execute("UPDATE matricula SET nota = " + nota + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
+            // verifica se o aluno está matriculado na disciplina
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // caso não esteja matriculado
             if(!rs.isBeforeFirst()){
                 response.setMensagem("Não há alunos matriculados nessa disciplina");
                 return response.build();
             }
+            // atualiza a nota
+            statement.execute("UPDATE matricula SET nota = " + nota + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
+            // busca novamente a nota para retornar o aluno com a nota atualizada
+            rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // cria um objeto para a resposta
             response.setRa(rs.getInt("ra"));
             response.setAno(rs.getInt("ano"));
             response.setSemestre(rs.getInt("semestre"));
             response.setCodigoDisciplina(rs.getString("cod_disciplina"));
             response.setNota(rs.getFloat("nota"));
         }
+        // caso ocorra um erro
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        // response.setAluno("a");
         return response.build();
     }
 
+    // ALTERA AS FALTAS DO ALUNO
     public static GerenciamentoNotas.alterarFaltasResponse alterarFaltas(Connection connection, int ra, String codigoDisciplina, int ano, int semestre, int faltas) {        
         GerenciamentoNotas.alterarFaltasResponse.Builder response = GerenciamentoNotas.alterarFaltasResponse.newBuilder();
+        // tenta executar
         try{
-            // TODO verificar se o aluno está matriculado na disciplina
-            // TODO verificar se a disciplina existe
-
+            // cria um statement para realizar a consulta
             Statement statement = connection.createStatement();
-            statement.execute("UPDATE matricula SET faltas = " + faltas + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
+            // verificar se o aluno está matriculado na disciplina
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // caso não esteja, retornar mensagem de erro
             if(!rs.isBeforeFirst()){
                 response.setMensagem("O aluno não foi encontrado na disciplina informada");
                 return response.build();
             }
+            // atualiza as faltas
+            statement.execute("UPDATE matricula SET faltas = " + faltas + " WHERE ra =" + ra + " AND cod_disciplina = '" + String.valueOf(codigoDisciplina) + "' AND ano = " + ano + " AND semestre = " + semestre + ";");
+            // busca novamente a nota para retornar o aluno com as faltas atualizadas
+            ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // cria o objeto response
             response.setRa(rs.getInt("ra"));
             response.setAno(rs.getInt("ano"));
             response.setSemestre(rs.getInt("semestre"));
             response.setCodigoDisciplina(rs.getString("cod_disciplina"));
             response.setFaltas(rs.getInt("faltas"));
         }
+        // caso ocorra um erro
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        // response.setAluno("a");
         return response.build();
     }
 
+    // LISTA AS DISCIPLINAS DE UM CURSO
     public static GerenciamentoNotas.listarDisciplinasCursoResponse listarDisciplinasCurso(Connection connection, int codigoCurso) {        
+        // cria um builder para a resposta
         GerenciamentoNotas.listarDisciplinasCursoResponse.Builder response = GerenciamentoNotas.listarDisciplinasCursoResponse.newBuilder();
         try{
+            // cria um statement
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE " + String.valueOf(codigoCurso) + " = cod_curso;" /*+ ano + " = ano AND " + semestre + " = semestre;"*/);
+            // busca as disciplinas de um curso
+            ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE " + String.valueOf(codigoCurso) + " = cod_curso;");
+            // verificar se foi encontrado alguma disciplina
             if(!rs.isBeforeFirst()){
                 response.setMensagem("Não foi encontrada nenhuma disciplina para o curso informado");
                 return response.build();
             }
+            // cria um objeto para a resposta
             while(rs.next()){
                 String professor = rs.getString("professor");
                 String nome = rs.getString("nome");
@@ -124,6 +160,7 @@ public class servidor {
             }
 
         }
+        // caso ocorra algum erro
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
@@ -131,16 +168,23 @@ public class servidor {
         return response.build();
     }
 
-    public static GerenciamentoNotas.listarDisciplinasAlunoResponse listarDisciplinasAluno(Connection connection, int ra, int ano, int semestre) {        
+    // LISTA AS DISCIPLINAS DE UM ALUNO
+    public static GerenciamentoNotas.listarDisciplinasAlunoResponse listarDisciplinasAluno(Connection connection, int ra, int ano, int semestre) {     
+        // cria um builder para a resposta   
         GerenciamentoNotas.listarDisciplinasAlunoResponse.Builder response = GerenciamentoNotas.listarDisciplinasAlunoResponse.newBuilder();
+        // tenta executar
         try{
+            // cria um statement 
             Statement statement = connection.createStatement();
-            /*Listagem de disciplinas, faltas e notas (RA, nome, nota, faltas) de um aluno informado o ano e semestre.*/ 
+            // busca as disciplinas do aluno com base no ra e ano e semestre
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // se não houver nenhum resultado
             if(!rs.isBeforeFirst()){
+                // define a mensagem de erro
                 response.setMensagem("O aluno informado não está cadastrado em nenhuma disciplina no ano e semetre informados");
                 return response.build();
             }
+            // cria um objeto para a resposta /* enfase na diferença entre add e set */
             while(rs.next()){
                 String codigoDisciplinaResult = rs.getString("cod_disciplina");
                 float nota = rs.getFloat("nota");
@@ -149,6 +193,7 @@ public class servidor {
             }
 
         }
+        // caso ocorra algum erro, define a mensagem de erro
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
@@ -156,38 +201,52 @@ public class servidor {
         return response.build();
     }
 
-    public static GerenciamentoNotas.inserirMatriculaResponse inserirMatricula(Connection connection, int ra,String codigoDisciplina, int ano, int semestre) {        
+    // INSERE UMA MATRICULA
+    public static GerenciamentoNotas.inserirMatriculaResponse inserirMatricula(Connection connection, int ra,String codigoDisciplina, int ano, int semestre) {
+        //cria um builder para a resposta 
         GerenciamentoNotas.inserirMatriculaResponse.Builder response = GerenciamentoNotas.inserirMatriculaResponse.newBuilder();
+        // tenta executar
         try{
-            // TODO: verificar se o aluno já está matriculado nessa disciplina
-            // TODO: verificar se a disciplina existe
-            // TODO: verificar se o aluno existe
+            // cria um statement
             Statement statement = connection.createStatement();
+            // verifica se a disciplina existe
             ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE '" + String.valueOf(codigoDisciplina) + "' = codigo;");
+            // caso não encontre a disciplina, retorna mensagem de erro
             if(!rs.isBeforeFirst()){
+                // define a mensagem de erro
                 response.setMensagem("A disciplina informada não existe");
                 return response.build();
             }
 
+            // verifica se o aluno existe
             rs = statement.executeQuery("SELECT * FROM aluno WHERE " + ra + " = ra;");
+            // caso não exista, define a mensagem de erro
             if(!rs.isBeforeFirst()){
+                // define a mensagem de erro
                 response.setMensagem("O aluno informado não existe");
                 return response.build();
             }
 
-            
+            // verifica se o aluno já está matriculado na disciplina
             rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // caso esteja matriculado, retorna mensagem de erro
             if(rs.isBeforeFirst()){
+                // define a mensagem de erro
                 response.setMensagem("O aluno já está matriculado nessa disciplina");
                 return response.build();
             }
 
+            // executa a inserção na tabela matricula
             statement.execute("INSERT INTO matricula (ra, cod_disciplina, ano, semestre, nota, faltas) VALUES (" + ra + ", '" + String.valueOf(codigoDisciplina) + "', " + ano + ", " + semestre + ", 0, 0);");
+            // executa a query para verificar se a matricula foi inserida
             rs = statement.executeQuery("SELECT * FROM matricula WHERE " + ra + " = ra AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
+            // verifica se a resposta é vazia
             if(!rs.isBeforeFirst()){
+                // define a mensagem de erro
                 response.setMensagem("Não foi possível realizar a matrícula");
                 return response.build();
             }
+            // cria o objeto de resposta
             while(rs.next()){
                 int raResult = rs.getInt("ra");
                 int anoResult = rs.getInt("ano");
@@ -199,16 +258,22 @@ public class servidor {
             }
 
         }
+        // caso ocorra algum erro, define a mensagem de erro
         catch(SQLException e){
+            // mostrar a mensagem de erro
             response.setMensagem(e.getMessage());
         }
         return response.build();
     }
 
     public static void main(String args[]) {
+        // cria conexão com o banco de dados
         Connection conn = connect();
+        // tenta executar 
         try {
+            // define a porta do servidor
             int serverPort = 7000;
+            // Cria um socket do tipo SERVER
             ServerSocket listenSocket = new ServerSocket(serverPort);
             // Váriveis para o recebimento de mensagens
             String valueStr;
@@ -294,6 +359,9 @@ public class servidor {
                         // recebe o request e faz o unmarshalling
                         GerenciamentoNotas.listarDisciplinasCursoRequest listarDisciplinasCursoRequest = GerenciamentoNotas.listarDisciplinasCursoRequest.parseFrom(buffer);
                         // chama a função que faz a listagem de disciplinas do curso
+                        if(listarDisciplinasCursoRequest.hasCodigoCurso()){
+                            System.out.println(foda);
+                        }
                         GerenciamentoNotas.listarDisciplinasCursoResponse listarDisciplinasCursoResponse = listarDisciplinasCurso(conn, listarDisciplinasCursoRequest.getCodigoCurso());
                         // converte o resultado da função para bytes
                         msg = listarDisciplinasCursoResponse.toByteArray();
@@ -337,7 +405,6 @@ public class servidor {
                         System.out.println("Nenhum tipo de requisição");
                         break;
                 }
-                // System.out.println("−−\n" + type + "−−\n");
             } // while
         } catch (IOException e) {
             // Mostra o erro
