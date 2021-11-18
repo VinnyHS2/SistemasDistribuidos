@@ -14,4 +14,3 @@ Executar:
 ---------
 
 mvn exec:java -D"exec.mainClass"="Server" 
-mvn exec:java -D"exec.mainClass"="Client" 

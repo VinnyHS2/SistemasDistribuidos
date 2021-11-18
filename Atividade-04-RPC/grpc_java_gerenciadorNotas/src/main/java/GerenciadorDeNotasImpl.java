@@ -22,8 +22,10 @@ import java.sql.*;
  */
 
 public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDeNotasImplBase {
+    // conecta com o banco de dados
     static final Connection connection = connect();
     
+    // cria conexão com o banco de dados
     public static Connection connect() {
         Connection conn = null;
 
@@ -43,7 +45,9 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
     }
 
     @Override
+    // Metodo que lista os alunos de uma disciplina
     public void listarAlunos(ListarAlunosRequest request, StreamObserver<ListarAlunosResponse> responseObserver) {
+        // Cria o builder de resposta
         ListarAlunosResponse.Builder response = ListarAlunosResponse.newBuilder();
         try{
             // cria um statement para realizar a consulta
@@ -52,6 +56,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             ResultSet rs = statement.executeQuery("SELECT a.* FROM matricula m INNER JOIN aluno a ON (a.ra = m.ra) WHERE '" + String.valueOf(request.getCodigoDisciplina()) + "' = cod_disciplina AND " + request.getAno() + " = ano AND " + request.getSemestre() + " = semestre;");
             // caso não encontre nenhum aluno
             if(!rs.isBeforeFirst()){
+                // joga uma exceção
                 throw new SQLException("Não há alunos matriculados nessa disciplina");
             }
             // cria um objeto para a resposta
@@ -67,12 +72,14 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
+        // monta e envia a resposta
         ListarAlunosResponse res = response.build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
 
     @Override
+    // Metodo que altera a nota de um aluno em uma disciplina
     public void alterarNota(AlterarNotaRequest request, StreamObserver<AlterarNotaResponse> responseObserver) {
         AlterarNotaResponse.Builder response = AlterarNotaResponse.newBuilder();
         // tneta executar
@@ -83,6 +90,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + request.getRa() + " AND '" + String.valueOf(request.getCodigoDisciplina()) + "' = cod_disciplina AND " + request.getAno() + " = ano AND " + request.getSemestre() + " = semestre;");
             // caso não esteja matriculado
             if(!rs.isBeforeFirst()){
+                // joga uma exceção
                 throw new SQLException("O aluno não foi encontrado na disciplina informada");
             }
             // atualiza a nota
@@ -100,7 +108,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        response.build();
+        // monta e envia a resposta
         AlterarNotaResponse res = response.build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
@@ -117,6 +125,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + request.getRa() + " AND '" + String.valueOf(request.getCodigoDisciplina()) + "' = cod_disciplina AND " + request.getAno() + " = ano AND " + request.getSemestre() + " = semestre;");
             // caso não esteja, retornar mensagem de erro
             if(!rs.isBeforeFirst()){
+                // joga uma exceção
                 throw new SQLException("O aluno não foi encontrado na disciplina informada");
             }
             // atualiza as faltas
@@ -134,8 +143,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        response.build();
-        
+        // monta e envia a resposta
         AlterarFaltasResponse res = response.build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
@@ -152,6 +160,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE " + String.valueOf(request.getCodigoCurso()) + " = cod_curso;");
             // verificar se foi encontrado alguma disciplina
             if(!rs.isBeforeFirst()){
+                // joga uma exceção
                 throw new SQLException("Não foi encontrada nenhuma disciplina para o curso informado");
             }
             // cria um objeto para a resposta
@@ -167,9 +176,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        // response.setAluno("a");
-        response.build();
-        
+        // monta e envia a resposta
         ListarDisciplinasCursoResponse res = response.build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
@@ -187,7 +194,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE " + request.getRa() + " = ra AND " + request.getAno() + " = ano AND " + request.getSemestre() + " = semestre;");
             // se não houver nenhum resultado
             if(!rs.isBeforeFirst()){
-                // define a mensagem de erro
+                // joga uma exceção
                 throw new SQLException("O aluno informado não está cadastrado em nenhuma disciplina no ano e semetre informados");
             }
             // cria um objeto para a resposta /* enfase na diferença entre add e set */
@@ -203,9 +210,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
         catch(SQLException e){
             response.setMensagem(e.getMessage());
         }
-        // response.setAluno("a");
-        response.build();
-        
+        // monta e envia a resposta
         ListarDisciplinasAlunoResponse res = response.build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
@@ -223,7 +228,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             ResultSet rs = statement.executeQuery("SELECT * FROM disciplina WHERE '" + String.valueOf(request.getMatricula().getCodigoDisciplina()) + "' = codigo;");
             // caso não encontre a disciplina, retorna mensagem de erro
             if(!rs.isBeforeFirst()){
-                // define a mensagem de erro
+                // joga uma exceção
                 throw new SQLException("A disciplina informada não existe");
             }
 
@@ -231,7 +236,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             rs = statement.executeQuery("SELECT * FROM aluno WHERE " + request.getMatricula().getRa() + " = ra;");
             // caso não exista, define a mensagem de erro
             if(!rs.isBeforeFirst()){
-                // define a mensagem de erro
+                // joga uma exceção
                 throw new SQLException("O aluno informado não existe");
             }
 
@@ -239,7 +244,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             rs = statement.executeQuery("SELECT * FROM matricula WHERE " + request.getMatricula().getRa() + " = ra AND '" + String.valueOf(request.getMatricula().getCodigoDisciplina()) + "' = cod_disciplina AND " + request.getMatricula().getAno() + " = ano AND " + request.getMatricula().getSemestre() + " = semestre;");
             // caso esteja matriculado, retorna mensagem de erro
             if(rs.isBeforeFirst()){
-                // define a mensagem de erro
+                // joga uma exceção
                 throw new SQLException("O aluno já está matriculado nessa disciplina");
             }
 
@@ -249,7 +254,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             rs = statement.executeQuery("SELECT * FROM matricula WHERE " + request.getMatricula().getRa() + " = ra AND '" + String.valueOf(request.getMatricula().getCodigoDisciplina()) + "' = cod_disciplina AND " + request.getMatricula().getAno() + " = ano AND " + request.getMatricula().getSemestre() + " = semestre;");
             // verifica se a resposta é vazia
             if(!rs.isBeforeFirst()){
-                // define a mensagem de erro
+                // joga uma exceção
                 throw new SQLException("Não foi possível realizar a matrícula");
             }
             // cria o objeto de resposta
@@ -269,7 +274,7 @@ public class GerenciadorDeNotasImpl extends GerenciadorDeNotasGrpc.GerenciadorDe
             // mostrar a mensagem de erro
             response.setMensagem(e.getMessage());
         }
-        response.build();
+        // monta e envia a resposta
         InserirMatriculaResponse res = response.build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
