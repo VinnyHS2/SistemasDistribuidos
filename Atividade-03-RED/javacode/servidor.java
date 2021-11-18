@@ -84,7 +84,7 @@ public class servidor {
             ResultSet rs = statement.executeQuery("SELECT * FROM matricula WHERE ra = " + ra + " AND '" + String.valueOf(codigoDisciplina) + "' = cod_disciplina AND " + ano + " = ano AND " + semestre + " = semestre;");
             // caso não esteja matriculado
             if(!rs.isBeforeFirst()){
-                response.setMensagem("Não há alunos matriculados nessa disciplina");
+                response.setMensagem("O aluno não foi encontrado na disciplina informada");
                 return response.build();
             }
             // atualiza a nota
