@@ -12,7 +12,7 @@ Bibliotecas
   - hashlib:    Esta biblioteca implementa uma interface para diferentes tipo de hash e para o tratamento de mensagens.
 
 Exemplos de uso: 
-	Se connectar no servidor 
+	Se conectar no servidor 
   		Após compilar e executar o programa digite no terminal do cliente o comando:
 		- connect pato 123
 		Após enviar este comando o terminal do cliente irá exibir a mensagem "SUCCESS" e irá permitir o uso das
